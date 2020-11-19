@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "507490310828",
+    "firebase_url": "https://shop-base-5bb18.firebaseio.com",
+    "project_id": "shop-base-5bb18",
+    "storage_bucket": "shop-base-5bb18.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507490310828:android:556be6e47101d3e9e6dd09",
+        "android_client_info": {
+          "package_name": "com.example.davonlineshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "507490310828-4ilhsngv18kmkeu3916mbn7rp175hl8b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.davonlineshop",
+            "certificate_hash": "44055d085a1bd0d2a0ad5595154629c87906bd40"
+          }
+        },
+        {
+          "client_id": "507490310828-c2bguvuvke1krrqk14bsml0f26k2g4i5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2lfjCmTiPXyWK3h8I13zZbfDXp2pDXLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "507490310828-c2bguvuvke1krrqk14bsml0f26k2g4i5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
