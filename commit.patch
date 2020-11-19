@@ -1,0 +1,15 @@
+Index: app/src/main/java/com/example/davonlineshop/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/davonlineshop/MainActivity.java	(revision 03133b10ab471e2f096ee85064b3856a7bd89c78)
++++ app/src/main/java/com/example/davonlineshop/MainActivity.java	(date 1605787206167)
+@@ -15,6 +15,7 @@
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
++
+         setContentView(R.layout.activity_main);
+         BottomNavigationView navView = findViewById(R.id.nav_view);
+         // Passing each menu ID as a set of Ids because each
