@@ -98,3 +98,14 @@ public class MyFireBaseMessagingService extends FirebaseMessagingService {
             }
 
 }
+/* https://fcm.googleapis.com/fcm/send
+ header Content-Type - application/json
+ Authorization - key=
+ body {
+    "notification":{
+    	"title":"hello",
+    	 "body":"how are you"
+    	 },
+    "to":"fire key"
+    }
+ */
