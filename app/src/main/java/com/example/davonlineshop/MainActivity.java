@@ -2,16 +2,13 @@ package com.example.davonlineshop;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
 
 import com.example.davonlineshop.ui.Common;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -52,4 +49,5 @@ public class MainActivity extends AppCompatActivity {
         Log.e("my", Common.currentToken);
 
     }
+
 }
