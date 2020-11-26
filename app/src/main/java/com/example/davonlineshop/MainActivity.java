@@ -1,19 +1,14 @@
 package com.example.davonlineshop;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-
-import com.example.davonlineshop.ui.Common;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.iid.FirebaseInstanceId;
-
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
 //
 //                });
 
-        Common.currentToken = FirebaseInstanceId.getInstance().getToken();
-        Log.e("my", Common.currentToken);
+//        Common.currentToken = FirebaseInstanceId.getInstance().getToken();
+//        Log.e("my", Common.currentToken);
 
     }
 

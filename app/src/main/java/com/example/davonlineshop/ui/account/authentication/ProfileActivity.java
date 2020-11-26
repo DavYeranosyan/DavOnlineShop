@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.davonlineshop.R;
+import com.example.davonlineshop.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()){
                         for (DataSnapshot child : snapshot.getChildren()) {
-                            Model model = child.getValue(Model.class);
+                            User model = child.getValue(User.class);
                             textView.setText("Welcome " + model.getName() + " " + model.getSurname());
                         }
                     }else{

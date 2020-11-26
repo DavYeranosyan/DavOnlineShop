@@ -38,6 +38,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.account.authentication.LoginActivity"/>
+        <activity android:name=".ui.account.authentication.ProfileActivity"/>
+        <activity android:name=".ui.account.authentication.RegisterActivity"/>
         <service
             android:name=".ui.notifications.MyFireBaseInstenceIdService">
             <intent-filter>

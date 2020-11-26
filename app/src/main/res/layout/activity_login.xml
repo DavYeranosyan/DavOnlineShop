@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".authentication.LoginActivity">
+    tools:context=".ui.account.authentication.LoginActivity">
 
     <TextView
         android:id="@+id/textView3"

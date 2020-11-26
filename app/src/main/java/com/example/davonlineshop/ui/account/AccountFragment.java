@@ -28,8 +28,7 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         accountViewModel = ViewModelProviders.of(this).get(AccountViewModel.class);
         View root = inflater.inflate(R.layout.fragment_account, container, false);
-        Intent intent = new Intent(getContext(), LoginActivity.class);
-        startActivity(intent);
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        startActivity(new Intent(getActivity(), LoginActivity.class));
+        return root;
     }
 }

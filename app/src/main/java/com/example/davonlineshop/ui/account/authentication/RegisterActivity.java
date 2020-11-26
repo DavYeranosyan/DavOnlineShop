@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.davonlineshop.R;
+import com.example.davonlineshop.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -56,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     String emailF = email.getText().toString();
                                     String ageF = age.getText().toString();
                                     databaseReference  = FirebaseDatabase.getInstance().getReference("users").push();
-                                    Model model = new Model();
+                                    User model = new User();
                                     model.setId(databaseReference.getKey());
                                     model.setName(nameF);
                                     model.setSurname(surnameF);

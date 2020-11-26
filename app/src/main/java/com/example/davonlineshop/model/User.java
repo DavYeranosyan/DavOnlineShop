@@ -8,12 +8,13 @@ public class User {
     private String email;
     private String password;
     private int active;
+    private int age;
     private Type type;
 
     public User() {
     }
 
-    public User(String id, String name, String surname, String email, String password, int active, Type type) {
+    public User(String id, String name, String surname, String email, String password, int active, Type type, int age) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -21,6 +22,7 @@ public class User {
         this.password = password;
         this.active = active;
         this.type = type;
+        this.age = age;
     }
 
     public String getId() {
@@ -79,4 +81,11 @@ public class User {
         this.type = type;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 }
