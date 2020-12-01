@@ -1,6 +1,8 @@
 package com.example.davonlineshop.ui.account.authentication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -18,7 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
     EditText email, password;
     FirebaseAuth firebaseAuth;
-
+    SharedPreferences sharedpreferences;
+    public static final String MyPreference = "data_user" ;
+    public static final String Email = "email";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.emailLog);
         password = findViewById(R.id.passwordLog);
         firebaseAuth = FirebaseAuth.getInstance();
+        sharedpreferences = getSharedPreferences(MyPreference, Context.MODE_PRIVATE);
     }
 
     public void signIn(View view) {
@@ -37,6 +42,9 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                     }else {
                         if(firebaseAuth.getCurrentUser().isEmailVerified()){
+                            SharedPreferences.Editor data_user = sharedpreferences.edit();
+                            data_user.putString(Email, String.valueOf(email));
+                            data_user.commit();
                             startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
                         }else{
                             Toast.makeText(getApplicationContext(), "Email is invalid verified", Toast.LENGTH_LONG).show();

@@ -6,21 +6,33 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.example.davonlineshop.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Random;
+import java.util.concurrent.Executor;
 
 public class MyFireBaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         showNotification(remoteMessage.getNotification());
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener((Executor) this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String mToken = instanceIdResult.getToken();
+                Log.e("Token",mToken);
+            }
+        });
 
     }
 
@@ -73,7 +85,7 @@ public class MyFireBaseMessagingService extends FirebaseMessagingService {
                         new NotificationCompat.Builder(this, noteId)
                                 .setAutoCancel(true)
                                 .setDefaults(Notification.DEFAULT_ALL)
-                                .setSmallIcon(R.drawable.ic_baseline_notifications)
+                                .setSmallIcon(R.mipmap.ic_launcher)
                                 .setContentInfo("info")
                                 .setWhen(System.currentTimeMillis())
                                 .setContentTitle("Title")
