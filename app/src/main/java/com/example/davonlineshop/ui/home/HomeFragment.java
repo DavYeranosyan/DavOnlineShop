@@ -1,10 +1,5 @@
 package com.example.davonlineshop.ui.home;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -42,7 +37,6 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
     Button btn, btn2;
     ImageView imageView;
     FirebaseStorage firebaseStorage;
@@ -50,8 +44,7 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 //        imageView = root.findViewById(R.id.img1);
 //        firebaseStorage = FirebaseStorage.getInstance();

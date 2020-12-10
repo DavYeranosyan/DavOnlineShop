@@ -1,6 +1,8 @@
 package com.example.davonlineshop.ui.dashboard;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +15,18 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.davonlineshop.R;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class DashboardFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    SharedPreferences sharedPreferences;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-//        dashboardViewModel =
-//                ViewModelProviders.of(this).get(DashboardViewModel.class);
-//        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//
-//            }
-//        });
+        sharedPreferences = getActivity().getPreferences(MODE_PRIVATE);
+        String s = sharedPreferences.getString("email", "");
+        Log.d("my", "onCreateView: "+ s);
+
         return root;
     }
 

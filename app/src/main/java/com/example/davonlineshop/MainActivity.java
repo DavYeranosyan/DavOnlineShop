@@ -1,11 +1,15 @@
 package com.example.davonlineshop;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -56,5 +60,18 @@ public class MainActivity extends AppCompatActivity {
 //        Common.currentToken = FirebaseInstanceId.getInstance().getInstanceId().getToken();
 //        Log.e("my", Common.currentToken);
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void replaceFragments(Class fragmentClass) {
+        Fragment fragment = null;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment, fragment);
+        transaction.commit();
     }
 }

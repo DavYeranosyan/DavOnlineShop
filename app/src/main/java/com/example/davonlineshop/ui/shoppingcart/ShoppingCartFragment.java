@@ -19,7 +19,6 @@ import com.example.davonlineshop.R;
 
 public class ShoppingCartFragment extends Fragment {
 
-    private ShoppingCartViewModel shoppingCartViewModel;
     CardForm cardForm;
     Button ok;
     AlertDialog.Builder alertBuilder;
@@ -35,8 +34,6 @@ public class ShoppingCartFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        shoppingCartViewModel =
-                ViewModelProviders.of(this).get(ShoppingCartViewModel.class);
         View root = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         cardForm = root.findViewById(R.id.card_form);
         cardForm.cardRequired(true)
