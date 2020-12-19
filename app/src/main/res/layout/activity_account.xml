@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:orientation="vertical"
-    tools:context=".ui.home.HomeFragment"/>
+    tools:context=".ui.account.authentication.AccountActivity">
+
+
+    <fragment
+        android:id="@+id/frag_acc"
+        android:name="com.example.davonlineshop.ui.account.authentication.LoginFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
-import com.example.davonlineshop.MainActivity;
 import com.example.davonlineshop.R;
 import com.example.davonlineshop.model.Type;
 import com.example.davonlineshop.model.User;
@@ -33,7 +32,7 @@ public class RegisterFragment extends Fragment {
     DatabaseReference databaseReference;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_register, container, false);
+      final   View root = inflater.inflate(R.layout.fragment_register, container, false);
         name = root.findViewById(R.id.name);
         surname = root.findViewById(R.id.surname);
         email = root.findViewById(R.id.email);
@@ -53,10 +52,10 @@ public class RegisterFragment extends Fragment {
                                 Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
                             } else {
                                 firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(getContext(), "Werryyy Gooood", Toast.LENGTH_LONG).show();
                                             String nameF = name.getText().toString();
                                             String surnameF = surname.getText().toString();
                                             String emailF = email.getText().toString().toLowerCase();
@@ -71,6 +70,8 @@ public class RegisterFragment extends Fragment {
                                             model.setType(Type.USER);
                                             model.setAge(Integer.parseInt(ageF));
                                             databaseReference.setValue(model);
+                                            Toast.makeText(getContext(), "Werryyy Gooood", Toast.LENGTH_LONG).show();
+                                            ((AccountActivity) requireActivity()).replaceFragments2(LoginFragment.class);
                                         } else {
                                             Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                         }
@@ -86,7 +87,7 @@ public class RegisterFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                ((MainActivity) requireActivity()).replaceFragments(LoginFragment.class);
+                ((AccountActivity) requireActivity()).replaceFragments2(LoginFragment.class);
             }
         });
 
