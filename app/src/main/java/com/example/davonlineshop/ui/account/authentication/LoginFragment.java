@@ -67,8 +67,8 @@ public class LoginFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                Fragment fragment = new RegisterFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_acc, fragment);
+                Fragment fragment =new RegisterFragment();
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_acc, fragment);
             }
         });
         forgetPass = root.findViewById(R.id.forget_password);
