@@ -74,8 +74,8 @@
                 android:entries="@array/categories" />
 
             <EditText
+                android:id="@+id/productCount"
                 android:layout_marginTop="5dp"
-                android:id="@+id/editTextTextPersonName"
                 android:layout_width="102dp"
                 android:padding="3dp"
                 android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/price"
+            android:id="@+id/productPrice"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/border1"

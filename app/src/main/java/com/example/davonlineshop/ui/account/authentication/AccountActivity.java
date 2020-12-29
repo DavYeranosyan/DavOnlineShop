@@ -17,16 +17,16 @@ public class AccountActivity extends AppCompatActivity {
             setContentView(R.layout.activity_account);
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-//    public void replaceFragments2(Class fragmentClass) {
-//        Fragment fragment = null;
-//        try {
-//            fragment = (Fragment) fragmentClass.newInstance();
-//        } catch (IllegalAccessException | java.lang.InstantiationException e) {
-//            e.printStackTrace();
-//        }
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.frag_acc, fragment);
-//        transaction.commit();
-//    }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void replaceFragments2(Class fragmentClass) {
+        Fragment fragment = null;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (IllegalAccessException | java.lang.InstantiationException e) {
+            e.printStackTrace();
+        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frag_acc, fragment);
+        transaction.commit();
+    }
 }

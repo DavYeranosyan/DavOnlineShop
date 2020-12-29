@@ -1,5 +1,6 @@
 package com.example.davonlineshop.ui.account.authentication;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +27,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 
 public class LoginFragment extends Fragment {
     EditText email, password;
@@ -34,7 +37,7 @@ public class LoginFragment extends Fragment {
     Button signIn, signUp, forgetPass;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_login, container, true);
+        View root = inflater.inflate(R.layout.fragment_login, container, false);
         email = root.findViewById(R.id.emailLog);
         password = root.findViewById(R.id.passwordLog);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -72,10 +75,12 @@ public class LoginFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                Fragment f = new RegisterFragment();
+//                ((AccountActivity) requireActivity()).replaceFragments2(RegisterFragment.class);
+                RegisterFragment f = new RegisterFragment();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frag_acc, f);
+                transaction.add(R.id.frag_acc, f);
                 transaction.commit();
+                Toast.makeText(getContext(), "sign up", Toast.LENGTH_LONG).show();
             }
         });
         forgetPass = root.findViewById(R.id.forget_password);
@@ -84,6 +89,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                ((AccountActivity) requireActivity()).replaceFragments2(ForgetPasswordFragment.class);
+                Toast.makeText(getContext(), "forget pass", Toast.LENGTH_LONG).show();
             }
         });
         return root;

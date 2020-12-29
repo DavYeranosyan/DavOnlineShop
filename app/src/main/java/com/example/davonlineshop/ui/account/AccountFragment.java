@@ -48,11 +48,13 @@ public class AccountFragment extends Fragment {
     TextView textView;
     DatabaseReference databaseReference;
 
+    FirebaseAuth auth;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_account, container, false);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         textView = root.findViewById(R.id.name_user);
+        auth = FirebaseAuth.getInstance();
 //        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         logout = root.findViewById(R.id.login_btn);
@@ -88,6 +90,7 @@ public class AccountFragment extends Fragment {
                         for (DataSnapshot child : snapshot.getChildren()) {
                             User user = child.getValue(User.class);
                             Toast.makeText(getContext(), user.getName() + " " +user.getSurname(), Toast.LENGTH_LONG).show();
+
                             textView.setText(user.getName() + " " + user.getSurname());
                             logout.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -102,6 +105,7 @@ public class AccountFragment extends Fragment {
                         logout.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                auth.signOut();
                                 startActivity(new Intent(getActivity(), AccountActivity.class));
                             }
                         });

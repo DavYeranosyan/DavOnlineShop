@@ -33,15 +33,17 @@ public class RegisterFragment extends Fragment {
     DatabaseReference databaseReference;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_register, container, false);
-        name = root.findViewById(R.id.name);
-        surname = root.findViewById(R.id.surname);
-        email = root.findViewById(R.id.email);
-        age = root.findViewById(R.id.age);
-        password = root.findViewById(R.id.password);
+        View a = inflater.inflate(R.layout.fragment_register, container , false);
+        Toast.makeText(getContext(), "sign up register", Toast.LENGTH_LONG).show();
+
+        name = a.findViewById(R.id.name);
+        surname = a.findViewById(R.id.surname);
+        email = a.findViewById(R.id.email);
+        age = a.findViewById(R.id.age);
+        password = a.findViewById(R.id.password);
         firebaseAuth = FirebaseAuth.getInstance();
-        signIn = root.findViewById(R.id.signInReg);
-        save = root.findViewById(R.id.saveMe);
+        signIn = a.findViewById(R.id.signInReg);
+        save = a.findViewById(R.id.saveMe);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +95,6 @@ public class RegisterFragment extends Fragment {
         });
 
 
-        return root;
+        return a;
     }
 }
