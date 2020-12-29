@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
@@ -32,7 +33,7 @@ public class RegisterFragment extends Fragment {
     DatabaseReference databaseReference;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-      final   View root = inflater.inflate(R.layout.fragment_register, container, false);
+        View root = inflater.inflate(R.layout.fragment_register, container, false);
         name = root.findViewById(R.id.name);
         surname = root.findViewById(R.id.surname);
         email = root.findViewById(R.id.email);
@@ -71,7 +72,7 @@ public class RegisterFragment extends Fragment {
                                             model.setAge(Integer.parseInt(ageF));
                                             databaseReference.setValue(model);
                                             Toast.makeText(getContext(), "Werryyy Gooood", Toast.LENGTH_LONG).show();
-                                            ((AccountActivity) requireActivity()).replaceFragments2(LoginFragment.class);
+//                                            ((AccountActivity) requireActivity()).replaceFragments2(LoginFragment.class);
                                         } else {
                                             Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                         }
@@ -87,7 +88,7 @@ public class RegisterFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                ((AccountActivity) requireActivity()).replaceFragments2(LoginFragment.class);
+//                ((AccountActivity) requireActivity()).replaceFragments2(LoginFragment.class);
             }
         });
 

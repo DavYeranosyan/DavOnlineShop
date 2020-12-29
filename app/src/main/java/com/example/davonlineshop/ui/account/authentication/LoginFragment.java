@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 
 import com.example.davonlineshop.MainActivity;
 import com.example.davonlineshop.R;
-import com.example.davonlineshop.ui.account.AccountFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -49,7 +51,10 @@ public class LoginFragment extends Fragment {
                             } else {
                                 if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                                     SharedPreferences.Editor preferences = getActivity().getSharedPreferences(Email, Context.MODE_PRIVATE).edit();
-                                    preferences.putString("email", email.getText().toString()).apply();
+                                    String e = email.getText().toString().toLowerCase();
+                                    Log.e("my", "onComplete: " + e);
+                                    preferences.putString("email", e);
+                                    preferences.apply();
                                     startActivity(new Intent(getActivity(), MainActivity.class));
                                 } else {
                                     Toast.makeText(getContext(), "Email is invalid verified", Toast.LENGTH_LONG).show();
@@ -67,8 +72,10 @@ public class LoginFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                Fragment fragment =new RegisterFragment();
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frag_acc, fragment);
+                Fragment f = new RegisterFragment();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frag_acc, f);
+                transaction.commit();
             }
         });
         forgetPass = root.findViewById(R.id.forget_password);
@@ -76,7 +83,7 @@ public class LoginFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                ((AccountActivity) requireActivity()).replaceFragments2(ForgetPasswordFragment.class);
+//                ((AccountActivity) requireActivity()).replaceFragments2(ForgetPasswordFragment.class);
             }
         });
         return root;

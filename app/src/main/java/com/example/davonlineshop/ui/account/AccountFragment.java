@@ -1,6 +1,8 @@
 package com.example.davonlineshop.ui.account;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,9 +42,9 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AccountFragment extends Fragment {
 
-    LinearLayout loginLayout;
+
     SharedPreferences sharedPreferences;
-    Button logout;
+    ImageView logout;
     TextView textView;
     DatabaseReference databaseReference;
 
@@ -49,13 +52,32 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_account, container, false);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        Log.e("my", "onCreateView: " + sharedPreferences.getString("email", ""));
         textView = root.findViewById(R.id.name_user);
-        loginLayout = root.findViewById(R.id.login_btn);
+//        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        logout = root.findViewById(R.id.login_btn);
+        Log.e("my", "onCreateView: " + sharedPreferences.getString("email", ""));
         if (sharedPreferences.getString("email", "").equals("")) {
-            startActivity(new Intent(getActivity(), AccountActivity.class));
+            logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("You need login account?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    }).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            startActivity(new Intent(getActivity(), AccountActivity.class));
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+            });
         } else {
             databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
             Query query = databaseReference.orderByChild("email").equalTo(sharedPreferences.getString("email", ""));
@@ -67,7 +89,7 @@ public class AccountFragment extends Fragment {
                             User user = child.getValue(User.class);
                             Toast.makeText(getContext(), user.getName() + " " +user.getSurname(), Toast.LENGTH_LONG).show();
                             textView.setText(user.getName() + " " + user.getSurname());
-                            loginLayout.setOnClickListener(new View.OnClickListener() {
+                            logout.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     sharedPreferences.edit().putString("email", "").apply();
@@ -77,7 +99,7 @@ public class AccountFragment extends Fragment {
                             break;
                         }
                     } else {
-                        loginLayout.setOnClickListener(new View.OnClickListener() {
+                        logout.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 startActivity(new Intent(getActivity(), AccountActivity.class));

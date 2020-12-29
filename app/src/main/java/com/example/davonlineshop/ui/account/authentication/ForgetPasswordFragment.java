@@ -25,7 +25,7 @@ public class ForgetPasswordFragment extends Fragment {
     FirebaseAuth firebaseAuth;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       final View root = inflater.inflate(R.layout.fragmnet_forget_password, container, false);
+        View root = inflater.inflate(R.layout.fragmnet_forget_password, container, false);
         editText = root.findViewById(R.id.emailText);
         sendMessage = root.findViewById(R.id.sendMess);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -38,7 +38,7 @@ public class ForgetPasswordFragment extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(getContext(), "Please sign in in your email and change password", Toast.LENGTH_LONG).show();
-                            ((AccountActivity) requireActivity()).replaceFragments2(LoginFragment.class);
+//                            ((AccountActivity) requireActivity()).replaceFragments2(LoginFragment.class);
                         }else {
                             Toast.makeText(getContext(), "This email is not registered in this application", Toast.LENGTH_LONG).show();
                         }
