@@ -16,8 +16,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
 //                Log.e("Token",mToken);
 //            }
 //        });
-//        Common.currentToken = FirebaseInstanceId.getInstance().getInstanceId().getToken();
-//        Log.e("my", Common.currentToken);
+        Common.currentToken = FirebaseInstanceId.getInstance().getToken();
+        Log.e("my", Common.currentToken);
 
     }
 

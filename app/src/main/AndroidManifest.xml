@@ -44,9 +44,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.account.authentication.AccountActivity"/>
+        <activity android:name=".ui.account.authentication.LoginActivity"/>
+        <activity android:name=".ui.account.authentication.RegisterActivity"/>
+        <activity android:name=".ui.account.authentication.ForgetPasswordActivity"/>
 
-        <service android:name=".ui.notifications.MyFireBaseInstenceIdService">
+        <service android:name=".ui.notifications.MyFireBaseInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>

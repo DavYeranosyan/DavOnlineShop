@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:gravity="center"
-    tools:context=".ui.account.authentication.RegisterFragment">
+    tools:context=".ui.account.authentication.RegisterActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -91,11 +91,11 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/saveMe"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:background="#00000000"
                     android:fontFamily="@font/montaga"
+                    android:onClick="saveMe"
                     android:text="Save Me"
                     android:textColor="#000000" />
 
@@ -105,6 +105,7 @@
                     android:layout_height="wrap_content"
                     android:background="#00000000"
                     android:fontFamily="@font/montaga"
+                    android:onClick="signIn"
                     android:text="Sign In"
                     android:textColor="#000000" />
 
