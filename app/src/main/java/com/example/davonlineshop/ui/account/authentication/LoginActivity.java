@@ -118,7 +118,8 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e("my", "onComplete: " + e);
                             preferences.putString("email", e);
                             preferences.apply();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
                         } else {
                             Toast.makeText(getApplicationContext(), "Email is invalid verified", Toast.LENGTH_LONG).show();
                         }
