@@ -25,10 +25,10 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -65,16 +65,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void replaceFragments(Class fragmentClass) {
-        Fragment fragment = null;
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.nav_host_fragment, fragment);
-        transaction.commit();
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//    public void replaceFragments(Class fragmentClass) {
+//        Fragment fragment = null;
+//        try {
+//            fragment = (Fragment) fragmentClass.newInstance();
+//        } catch (IllegalAccessException | InstantiationException e) {
+//            e.printStackTrace();
+//        }
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.nav_host_fragment, fragment);
+//        transaction.commit();
+//    }
 }
+

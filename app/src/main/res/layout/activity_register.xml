@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
     android:gravity="center"
     tools:context=".ui.account.authentication.RegisterActivity">
 
@@ -16,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:background="@drawable/borderrectangle"
+            android:background="@drawable/border_log"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="20dp">
@@ -25,6 +24,7 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="66dp"
+                android:layout_marginBottom="3dp"
                 android:fontFamily="@font/montaga"
                 android:text="Register"
                 android:textColor="#000000"
@@ -34,80 +34,81 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="#00FFFFFF"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/border_log"
                 android:ems="10"
                 android:fontFamily="@font/montaga"
                 android:hint="Name"
                 android:inputType="textPersonName"
+                android:paddingLeft="3dp"
                 android:textColor="#000000" />
 
             <EditText
                 android:id="@+id/surname"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="#00FFFFFF"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/border_log"
                 android:ems="10"
                 android:fontFamily="@font/montaga"
                 android:hint="Surname"
                 android:inputType="textPersonName"
+                android:paddingLeft="3dp"
                 android:textColor="#050505" />
 
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="#00FFFFFF"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/border_log"
                 android:ems="10"
                 android:fontFamily="@font/montaga"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
+                android:paddingLeft="3dp"
                 android:textColor="#000000" />
 
             <EditText
                 android:id="@+id/age"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="#00FFFFFF"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/border_log"
                 android:ems="10"
                 android:fontFamily="@font/montaga"
                 android:hint="Age"
                 android:inputType="number"
+                android:paddingLeft="3dp"
                 android:textColor="#000000" />
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="#00FFFFFF"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/border_log"
                 android:ems="10"
                 android:fontFamily="@font/montaga"
                 android:hint="Password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:paddingLeft="3dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="right"
                 android:orientation="horizontal">
 
                 <Button
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:background="#00000000"
+                    android:background="#999FA3"
                     android:fontFamily="@font/montaga"
                     android:onClick="saveMe"
-                    android:text="Save Me"
+                    android:text="Register"
                     android:textColor="#000000" />
 
-                <Button
-                    android:id="@+id/signInReg"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:background="#00000000"
-                    android:fontFamily="@font/montaga"
-                    android:onClick="signIn"
-                    android:text="Sign In"
-                    android:textColor="#070601" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

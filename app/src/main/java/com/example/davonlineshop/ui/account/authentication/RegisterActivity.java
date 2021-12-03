@@ -1,9 +1,11 @@
 package com.example.davonlineshop.ui.account.authentication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.davonlineshop.R;
@@ -29,6 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText name, surname, email, age, password;
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
+    ProgressDialog spinner;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,16 +45,28 @@ public class RegisterActivity extends AppCompatActivity {
         age = findViewById(R.id.age);
         password = findViewById(R.id.password);
         firebaseAuth = FirebaseAuth.getInstance();
+        spinner = new ProgressDialog(RegisterActivity.this);
+        spinner.setTitle("Please wait...");
+        spinner.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        actionBar.setDisplayShowHomeEnabled(true);
     }
 
     public void saveMe(View view) {
+        spinner.show();
+
         if (!email.getText().toString().equals("") && !password.getText().toString().equals("")) {
             firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
+                        spinner.cancel();
                         Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                     } else {
+                        spinner.show();
                         firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                             @Override
@@ -70,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     model.setAge(Integer.parseInt(ageF));
                                     databaseReference.setValue(model);
                                     Toast.makeText(getApplicationContext(), "Werryyy Gooood", Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                    finish();
                                 } else {
                                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 }
@@ -79,10 +96,13 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }
             });
-        }
+        }else spinner.cancel();
     }
 
-    public void signIn(View view) {
-        startActivity(new Intent(this, LoginActivity.class));
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        this.finish();
+        return true;
     }
+
 }

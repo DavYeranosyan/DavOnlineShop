@@ -3,9 +3,8 @@ package com.example.davonlineshop.ui.account.authentication;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,8 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+import androidx.core.app.NavUtils;
 
 import com.example.davonlineshop.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,10 +30,22 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_forget_password);
         editText = findViewById(R.id.emailText);
         sendMessage = findViewById(R.id.sendMess);
         firebaseAuth = FirebaseAuth.getInstance();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        actionBar.setDisplayShowHomeEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        this.finish();
+        return true;
     }
 
     public void sendMessInMail(View view) {
@@ -41,10 +53,11 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     Toast.makeText(getApplicationContext(), "Please sign in in your email and change password", Toast.LENGTH_LONG).show();
-                }else {
+                    finish();
+                } else {
                     Toast.makeText(getApplicationContext(), "This email is not registered in this application", Toast.LENGTH_LONG).show();
                 }
             }

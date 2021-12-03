@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +18,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
-import com.example.davonlineshop.MainActivity;
 import com.example.davonlineshop.R;
 import com.example.davonlineshop.model.Type;
 import com.example.davonlineshop.model.User;
+import com.example.davonlineshop.ui.account.accmenu.FavoriteActivity;
+import com.example.davonlineshop.ui.account.accmenu.FeedbackActivity;
+import com.example.davonlineshop.ui.account.accmenu.MessageActivity;
+import com.example.davonlineshop.ui.account.accmenu.OrderActivity;
+import com.example.davonlineshop.ui.account.accmenu.SettingsActivity;
 import com.example.davonlineshop.ui.account.authentication.LoginActivity;
-import com.example.davonlineshop.ui.home.HomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -90,11 +92,16 @@ public class AccountFragment extends Fragment {
                     if (snapshot.exists()) {
                         for (DataSnapshot child : snapshot.getChildren()) {
                             User user = child.getValue(User.class);
+                            if (user.getType() == Type.ADMIN){
+                                auth.signOut();
+                                sharedPreferences.edit().putString("email", "").apply();
+                                logout.setImageResource(R.drawable.ic_baseline_login_24);
+                               }else {
                             Toast.makeText(getContext(), user.getName() + " " + user.getSurname(), Toast.LENGTH_LONG).show();
                             textView.setText(user.getName() + " " + user.getSurname());
                             Toast.makeText(getContext(), user.getType() + " ", Toast.LENGTH_SHORT).show();
                             logout.setImageResource(R.drawable.ic_logout);
-                            break;
+                            break;}
                         }
                     } else {
                     }
@@ -157,40 +164,40 @@ public class AccountFragment extends Fragment {
         favorite_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "click in faworit list", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), FavoriteActivity.class));
             }
         });
         favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "click in faworit list", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), FavoriteActivity.class));
             }
         });
 
         message_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "click in message", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), MessageActivity.class));
             }
         });
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "click in message", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), MessageActivity.class));
             }
         });
 
         order_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "click in orders", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), OrderActivity.class));
 
             }
         });
         orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "click in orders", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), OrderActivity.class));
             }
         });
 
@@ -198,18 +205,58 @@ public class AccountFragment extends Fragment {
         setting_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "click in settings", Toast.LENGTH_SHORT).show();
-
-            }
+               startActivity(new Intent(getContext(), SettingsActivity.class));
+                           }
         });
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "click in settings", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), SettingsActivity.class));
+            }
+        });
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), FeedbackActivity.class));
             }
         });
 
-
+        feedback_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), FeedbackActivity.class));
+            }
+        });
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder bilder1 = new AlertDialog.Builder(getContext());
+                bilder1.setTitle("Version Program is 1.0.0")
+                        .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = bilder1.create();
+                alertDialog.show();
+            }
+        });
+        about_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder bilder1 = new AlertDialog.Builder(getContext());
+                bilder1.setTitle("Version Program is 1.0.0")
+                        .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = bilder1.create();
+                alertDialog.show();
+            }
+        });
         return root;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.davonlineshop.ui.account.authentication;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,26 +8,40 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import com.example.davonlineshop.AdminActivity;
 import com.example.davonlineshop.MainActivity;
 import com.example.davonlineshop.R;
+import com.example.davonlineshop.model.Type;
+import com.example.davonlineshop.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -34,6 +49,10 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     public static final String Email = "email";
     Button signIn, signUp, forgetPass;
+    ProgressDialog spinner;
+    DatabaseReference databaseReference;
+    FirebaseAuth auth;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,9 +61,17 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.emailLog);
         password = findViewById(R.id.passwordLog);
         firebaseAuth = FirebaseAuth.getInstance();
-}
+        spinner = new ProgressDialog(LoginActivity.this);
+        spinner.setTitle("Loading please wait...");
+        spinner.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        actionBar.setDisplayShowHomeEnabled(true);
+    }
 
-//    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    //    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View root = inflater.inflate(R.layout.activity_login, container, true);
 //        email = root.findViewById(R.id.emailLog);
 //        password = root.findViewById(R.id.passwordLog);
@@ -99,27 +126,57 @@ public class LoginActivity extends AppCompatActivity {
 //        });
 //        return root;
 //    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        finish();
+        return true;
+    }
 
     public void signUp(View view) {
         startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
     }
 
     public void signIn(View view) {
+//        spinner.show();
         if (!email.getText().toString().equals("") && !password.getText().toString().equals("")) {
             firebaseAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
+//                        spinner.cancel();
                         Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                     } else {
                         if (firebaseAuth.getCurrentUser().isEmailVerified()) {
-                            SharedPreferences.Editor preferences = getSharedPreferences(Email, Context.MODE_PRIVATE).edit();
-                            String e = email.getText().toString().toLowerCase();
-                            Log.e("my", "onComplete: " + e);
-                            preferences.putString("email", e);
-                            preferences.apply();
-//                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                            finish();
+                            spinner.show();
+                            databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+                            Query query = databaseReference.orderByChild("email").equalTo(email.getText().toString());
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        for (DataSnapshot child : snapshot.getChildren()) {
+                                            User user = child.getValue(User.class);
+                                            if (user.getType().toString().equals("ADMIN")){
+                                                startActivity(new Intent(getApplicationContext(), AdminActivity.class));
+                                            }else{
+                                                SharedPreferences.Editor preferences = getSharedPreferences(Email, Context.MODE_PRIVATE).edit();
+                                                String e = email.getText().toString().toLowerCase();
+                                                Log.e("my", "onComplete: " + e);
+                                                preferences.putString("email", e);
+                                                preferences.apply();
+                                                finish();
+                                            }
+                                            break;
+                                        }
+                                    } else {
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                         } else {
                             Toast.makeText(getApplicationContext(), "Email is invalid verified", Toast.LENGTH_LONG).show();
                         }
