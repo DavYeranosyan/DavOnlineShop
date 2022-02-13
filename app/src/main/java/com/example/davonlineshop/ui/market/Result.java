@@ -1,4 +1,4 @@
-package com.example.davonlineshop.ui.notifications;
+package com.example.davonlineshop.ui.market;
 
 public class Result {
     private String message_id;

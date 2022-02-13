@@ -1,7 +1,7 @@
 package com.example.davonlineshop;
 
 import com.example.davonlineshop.service.ApiService;
-import com.example.davonlineshop.ui.notifications.RetrofitClient;
+import com.example.davonlineshop.ui.market.RetrofitClient;
 
 public class Common {
     public static  String currentToken = "";

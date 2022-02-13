@@ -1,4 +1,4 @@
-package com.example.davonlineshop.ui.notifications;
+package com.example.davonlineshop.ui.market;
 
 import android.content.Intent;
 import android.util.Log;

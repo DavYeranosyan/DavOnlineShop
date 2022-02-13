@@ -1,7 +1,7 @@
 package com.example.davonlineshop.service;
 
-import com.example.davonlineshop.ui.notifications.Response;
-import com.example.davonlineshop.ui.notifications.Sender;
+import com.example.davonlineshop.ui.market.Response;
+import com.example.davonlineshop.ui.market.Sender;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

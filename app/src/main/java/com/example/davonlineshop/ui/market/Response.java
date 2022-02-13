@@ -1,4 +1,4 @@
-package com.example.davonlineshop.ui.notifications;
+package com.example.davonlineshop.ui.market;
 
 import java.util.List;
 

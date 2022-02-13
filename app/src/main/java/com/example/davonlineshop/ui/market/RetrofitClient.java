@@ -1,4 +1,4 @@
-package com.example.davonlineshop.ui.notifications;
+package com.example.davonlineshop.ui.market;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

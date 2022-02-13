@@ -25,8 +25,8 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.davonlineshop.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:name="com.example.davonlineshop.ui.market.NotificationsFragment"
+        android:label="@string/title_market"
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/navigation_account"

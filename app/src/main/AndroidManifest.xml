@@ -9,7 +9,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -108,13 +108,13 @@
                 android:value=".ui.account.authentication.ForgetPasswordActivity" />
         </activity>
 
-        <service android:name=".ui.notifications.MyFireBaseInstanceIdService">
+        <service android:name=".ui.market.MyFireBaseInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <service
-            android:name=".ui.notifications.MyFireBaseMessagingService"
+            android:name=".ui.market.MyFireBaseMessagingService"
             android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
