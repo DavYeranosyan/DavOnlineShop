@@ -36,6 +36,11 @@
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true" />
 
+        <activity android:name=".ui.home.ActivityFirstList">
+           <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.home.ActivityFirstList" />
+        </activity>
         <activity android:name=".AdminActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -58,21 +63,21 @@
         </activity>
         <activity
             android:name=".ui.account.accmenu.OpenMessageActivity"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.account.accmenu.OpenMessageActivity" />
         </activity>
         <activity
             android:name=".ui.account.accmenu.MessageActivity"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.account.accmenu.MessageActivity" />
         </activity>
         <activity
             android:name=".ui.account.accmenu.SettingsActivity"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.account.accmenu.SettingsActivity" />

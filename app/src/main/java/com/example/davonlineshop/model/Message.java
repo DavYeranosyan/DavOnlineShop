@@ -1,15 +1,15 @@
 package com.example.davonlineshop.model;
 
-public class Chat {
+public class Message {
     private String id;
     private String from_id;
     private String to_id;
     private String message;
 
-    public Chat() {
+    public Message() {
     }
 
-    public Chat(String id, String from_id, String to_id, String message) {
+    public Message(String id, String from_id, String to_id, String message) {
         this.id = id;
         this.from_id = from_id;
         this.to_id = to_id;

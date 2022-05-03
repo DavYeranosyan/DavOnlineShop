@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.dashboard.AddFragments.AddFragmentSecondListDriver">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <EditText
+                    android:id="@+id/inputEmailList2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Ներմուծեք Էլ․ հասցեն ում ուզում եք գրանցել որպես աշխատակից․․․"
+                    android:inputType="textEmailSubject"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <Button
+                    android:id="@+id/btnSearchUserList2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:text="Փնտրել" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/border_log"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/profilePhotoUserList2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="#000000"
+                    android:src="@drawable/ic_baseline_supervised_user_circle_24" />
+
+                <TextView
+                    android:id="@+id/userNameSurnameUserList2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/radioLayoutList2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#FFFFFF"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <RadioGroup
+                        android:id="@+id/radioList2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </RadioGroup>
+
+                    <EditText
+                        android:id="@+id/addDescriptionForDriverList2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Նկարագրության դաշտ․․․"
+                        android:inputType="textMultiLine|textImeMultiLine" />
+
+                    <EditText
+                        android:id="@+id/addPhoneNumberDriverList2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Հեռախոսահամար, օր․՝ +37477123456"
+                        android:inputType="phone" />
+
+                    <Button
+                        android:id="@+id/addBtnDriverList2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@color/colorPrimary"
+                        android:padding="10dp"
+                        android:text="Ավելացնել" />
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+
+</LinearLayout>

@@ -1,6 +1,8 @@
 package com.example.davonlineshop.ui.account.authentication;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         firebaseAuth = FirebaseAuth.getInstance();
         spinner = new ProgressDialog(RegisterActivity.this);
-        spinner.setTitle("Please wait...");
+        spinner.setTitle("Խնդրում ենք սպասել...");
         spinner.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
@@ -64,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
                         spinner.cancel();
-                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Խնդիր", Toast.LENGTH_LONG).show();
                     } else {
                         spinner.show();
                         firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -86,8 +88,22 @@ public class RegisterActivity extends AppCompatActivity {
                                     model.setType(Type.USER);
                                     model.setAge(Integer.parseInt(ageF));
                                     databaseReference.setValue(model);
-                                    Toast.makeText(getApplicationContext(), "Werryyy Gooood", Toast.LENGTH_LONG).show();
-                                    finish();
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplication());
+                                    builder.setTitle("Շնորհակալություն հենց Մեզ ընտրելու համար։").setMessage("Իսկ հիմա խնդրում ենք Ձեզ մուտք գործեք Ձեր Էլ․ փոստ, մենք Ձեզ ուղարկել ենք հաղորդագրություն որում կա հղում, սեղմեք հղման վրա և Դուք կվերիֆիկացվեք և կարող եք մուտք գործել Ձեր նոր հաշիվ։").setNegativeButton("Շատ բարի։)", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                            finish();
+                                        }
+                                    }).setPositiveButton("Բարի։)", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                            finish();
+                                        }
+                                    });
+                                    AlertDialog alertDialog = builder.create();
+                                    alertDialog.show();
                                 } else {
                                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 }
@@ -96,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }
             });
-        }else spinner.cancel();
+        }else    spinner.cancel();
     }
 
     @Override

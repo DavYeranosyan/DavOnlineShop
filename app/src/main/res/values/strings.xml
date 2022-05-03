@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Shin Pro</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Add Product</string>
-    <string name="title_market">Market</string>
-    <string name="title_account">My Acc</string>
-    <string name="title_shopping_cart">Cart</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Շին Պրո</string>
+    <string name="title_home">Սկիզբ</string>
+    <string name="title_dashboard">Ավելացնել</string>
+    <string name="title_market">Խանութ</string>
+    <string name="title_account">Իմ էջ</string>
+    <string name="title_shopping_cart">զամբյուղ</string>
+    <string name="hello_blank_fragment">Բարև</string>
     <string name="title">Hello Jony</string>
     <string name="text">Hello blank fragment</string>
     <string-array name="categories">

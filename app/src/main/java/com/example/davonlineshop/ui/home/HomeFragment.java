@@ -2,7 +2,6 @@ package com.example.davonlineshop.ui.home;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,41 +9,175 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.example.davonlineshop.MainActivity;
 import com.example.davonlineshop.R;
+import com.example.davonlineshop.model.List;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.util.Objects;
-import java.util.Random;
 import java.util.UUID;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class HomeFragment extends Fragment {
 
-    Button btn, btn2;
     ImageView imageView;
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+    ImageView photo1;
+    ImageView photo2;
+    TextView textView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-                View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+        firebaseStorage = FirebaseStorage.getInstance();
+//       textView = getActivity().findViewById(R.id.textView6);
+//       textView.setOnClickListener(new View.OnClickListener() {
+//           @Override
+//           public void onClick(View v) {
+//               startActivity(new Intent(getContext(), ActivityFirstList.class));
+//           }
+//       });
+        TextView name = root.findViewById(R.id.nameHome);
+        photo1 = root.findViewById(R.id.photo1);
+        photo1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ActivityFirstList.class));
+            }
+        });
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("list1");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot child : snapshot.getChildren()) {
+                        List list = child.getValue(List.class);
+                        name.setText(list.getNameProduct());
+                        storageReference = firebaseStorage.getReference().child("images/" + list.getNameProduct() + list.getPrice());
+                        Task<Uri> url =  storageReference.getDownloadUrl()
+                                .addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                if (task.isSuccessful()) {
+                                    String fileUrl = task.getResult().toString().substring(0, task.getResult().toString().indexOf("token"));
+                                    Picasso.get().load(fileUrl).into(photo1);
+                                }
+                            }
+                        });
+//                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                    @Override
+//                                    public void onSuccess(Uri uri) {
+//                                        String url = uri.toString();
+////                                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+////                                        builder.setMessage(url).setPositiveButton("Շատ բարի։)", new DialogInterface.OnClickListener() {
+////                                            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+////                                            @Override
+////                                            public void onClick(DialogInterface dialog, int which) {
+//////                                                replaceFragments(DashboardFragmentForAdminAndManager.class);
+////                                            }
+////                                        });
+////                                        AlertDialog alertDialog = builder.create();
+////                                        alertDialog.show();
+////                                        Picasso.get().load(url).into(photo1);
+//                                    }
+//                                }).addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception exception) {
+//                                // Handle any errors
+//                            }
+//                        });
+//                        UploadTask uploadTask = storageReference.putBytes(data);
+//                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//
+//                            @Override
+//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(
+//                                        new OnCompleteListener<Uri>() {
+//
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<Uri> task) {
+//                                                String fileLink = task.getResult().toString();
+//                                                //next work with URL
+//
+//                                            }
+//                                        });
+//
+//                            UploadTask uploadTask = storageReference.putFile(new Intent().getData());
+//                            Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+//                                @Override
+//                                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+//                                    if (task.isSuccessful()) {
+//                                        Toast.makeText(getContext(), "Succes", Toast.LENGTH_LONG).show();
+//                                    }
+//                                    return storageReference.getDownloadUrl();
+//                                }
+//                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+//                                @Override
+//                                public void onComplete(@NonNull Task<Uri> task) {
+//                                    if (task.isSuccessful()) {
+//                                        Log.d("AddImage", "Hasav");
+//                                        String fileUrl = task.getResult().toString().substring(0, task.getResult().toString().indexOf("token"));
+//                                        Picasso.get().load(fileUrl).into(photo1);
+//                                    }
+//                                }
+//                            });
+
+//                        getImage = databaseReference.child("images/");
+//
+//                        getImage.addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                if (dataSnapshot.hasChild(list.getImage_id()))
+//                                {
+//                                    String image = snapshot.child(list.getImage_id()).getValue().toString();
+//                                    Picasso.get().load(image).into(photo1);
+//                                }
+////                                String link = dataSnapshot.getValue(String.class);
+////                                Picasso.get().load(link).into(photo1);
+//                            }
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                                Toast.makeText(getContext(), "Error Loading Image", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+//        photo1 = root.findViewById(R.id.photo1);
+//        photo1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getContext(), ActivityFirstList.class));
+//            }
+//        });
 //        imageView = root.findViewById(R.id.img1);
 //        firebaseStorage = FirebaseStorage.getInstance();
 //        btn = root.findViewById(R.id.btnHome);
@@ -111,6 +244,7 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

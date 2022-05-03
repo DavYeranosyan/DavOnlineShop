@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    tools:context=".ui.dashboard.AddFragments.AddFragmentProductInMarket">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/addPhotoProductForMarket"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:src="@android:drawable/ic_input_add" />
+
+            <EditText
+                android:id="@+id/addNameProductForMarket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Նեմուծեք անվանումը"
+                android:inputType="textPersonName"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/addTextDescriptionProductForMarket"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Նկարագրության դաշտ"
+                android:inputType="textMultiLine|textImeMultiLine"
+                android:textColor="#000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginLeft="2dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginLeft="2dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/addPriceProductForMarket"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:numeric="integer"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp"
+                    android:text="AMD"
+                    android:textColor="#000000"
+                    android:textSize="22sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end"
+                android:orientation="vertical"
+                android:paddingTop="30dp">
+
+                <Button
+                    android:id="@+id/addBtnProductForMarket"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:padding="15dp"
+                    android:text="Ավելացնել"
+                    android:textColor="#F1F1F1" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

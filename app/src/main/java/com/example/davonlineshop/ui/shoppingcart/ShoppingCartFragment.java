@@ -13,67 +13,30 @@ import androidx.fragment.app.Fragment;
 
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.davonlineshop.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ShoppingCartFragment extends Fragment {
 
-    CardForm cardForm;
-    Button ok;
-    AlertDialog.Builder alertBuilder;
-
-    public ShoppingCartFragment() {
-
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    FirebaseStorage firebaseStorage;
+    StorageReference storageReference;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
-        cardForm = root.findViewById(R.id.card_form);
-        cardForm.cardRequired(true)
-                .cvvRequired(true)
-                .cardholderName(CardForm.FIELD_REQUIRED)
-                .mobileNumberRequired(true)
-                .postalCodeRequired(true)
-                .expirationRequired(true)
-                .mobileNumberExplanation("Dzer heraxosi hamarin kga SMS")
-                .setup((AppCompatActivity) getContext());
-        ok = root.findViewById(R.id.okBtn);
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (cardForm.isValid()) {
-                    alertBuilder = new AlertDialog.Builder(getContext());
-                    alertBuilder.setTitle("Title")
-                            .setMessage("Cart number:-> " + cardForm.getCardNumber() + "\nFull Name:-> " + cardForm.getCardholderName()
-                                    + "\nCVV :-> " + cardForm.getCvv() + "\nMM:" +
-                                    cardForm.getExpirationMonth() + "  YY:" +
-                                    cardForm.getExpirationYear() +
-                                    "\nPhone Number:-> " + cardForm.getMobileNumber())
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(getContext(), "Thank You", Toast.LENGTH_LONG).show();
-                                    dialog.dismiss();
-                                }
-                            });
-                        AlertDialog alertDialog = alertBuilder.create();
-                        alertDialog.show();
 
-                } else {
-                    Toast.makeText(getContext(), "Invalid", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+        firebaseStorage = FirebaseStorage.getInstance();
+
+
+
+
+
         return root;
     }
 }

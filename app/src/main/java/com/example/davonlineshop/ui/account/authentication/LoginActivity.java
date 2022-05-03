@@ -32,6 +32,7 @@ import com.example.davonlineshop.MainActivity;
 import com.example.davonlineshop.R;
 import com.example.davonlineshop.model.Type;
 import com.example.davonlineshop.model.User;
+import com.example.davonlineshop.ui.account.AccountFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.passwordLog);
         firebaseAuth = FirebaseAuth.getInstance();
         spinner = new ProgressDialog(LoginActivity.this);
-        spinner.setTitle("Loading please wait...");
+        spinner.setTitle("Կատարվում է հարցում խնդրում ենք սպասել...");
         spinner.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
@@ -148,37 +149,31 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                             spinner.show();
-                            databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
-                            Query query = databaseReference.orderByChild("email").equalTo(email.getText().toString());
-                            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (snapshot.exists()) {
-                                        for (DataSnapshot child : snapshot.getChildren()) {
-                                            User user = child.getValue(User.class);
-                                            if (user.getType().toString().equals("ADMIN")){
-                                                startActivity(new Intent(getApplicationContext(), AdminActivity.class));
-                                            }else{
-                                                SharedPreferences.Editor preferences = getSharedPreferences(Email, Context.MODE_PRIVATE).edit();
-                                                String e = email.getText().toString().toLowerCase();
-                                                Log.e("my", "onComplete: " + e);
-                                                preferences.putString("email", e);
-                                                preferences.apply();
-                                                finish();
-                                            }
-                                            break;
-                                        }
-                                    } else {
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
+//                            databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+//                            Query query = databaseReference.orderByChild("email").equalTo(email.getText().toString());
+//                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                    if (snapshot.exists()) {
+//                                        for (DataSnapshot child : snapshot.getChildren()) {
+//                                            User user = child.getValue(User.class);
+//                                            if (user.getType().toString().equals("ADMIN")){
+//                                                finish();
+//                                            }else{
+                            SharedPreferences.Editor preferences = getSharedPreferences(Email, Context.MODE_PRIVATE).edit();
+                            String e = email.getText().toString().toLowerCase();
+                            Log.e("my", "onComplete: " + e);
+                            preferences.putString("email", e);
+                            preferences.apply();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+//                                            }
+//                                            break;
+//                                        }
+//                                    } else {
+//                                    }
                         } else {
-                            Toast.makeText(getApplicationContext(), "Email is invalid verified", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Ձեր հաշիվը վերիֆիկացված չէ։(\nԽնդրում ենք մուտք գործեք Ձեր Էլեկտրոնային փոստ Ձեզ մեր կողմից ւղարկվել է հղում սեղմեք հղման վրա եվ դուք կվերիֆիկացվեք", Toast.LENGTH_LONG).show();
                         }
                     }
                 }

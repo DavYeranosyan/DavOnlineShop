@@ -49,20 +49,25 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     }
 
     public void sendMessInMail(View view) {
-        firebaseAuth.sendPasswordResetEmail(editText.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                    Toast.makeText(getApplicationContext(), "Please sign in in your email and change password", Toast.LENGTH_LONG).show();
-                    finish();
-                } else {
-                    Toast.makeText(getApplicationContext(), "This email is not registered in this application", Toast.LENGTH_LONG).show();
+        if (!editText.getText().toString().isEmpty()) {
+            firebaseAuth.sendPasswordResetEmail(editText.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        Toast.makeText(getApplicationContext(), "Մուտք գործեք Ձեր Էլ․ փոստ։", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Մեր համակարգում Փեր կողմից նշված Էլ․ հասցեն գրանցված չէ։", Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-        });
-        SendMail sendMail = new SendMail(getApplicationContext(), editText.getText().toString(), "Forget Password", "Forget Password");
-        sendMail.execute();
+            });
+            SendMail sendMail = new SendMail(getApplicationContext(), editText.getText().toString(), "Շին Պրո - Գաղտնաբառի փոփոխություն", "Սեղմեք հղումի վրա և գրեք Ձեր նոր գաղտնաբառը։");
+            sendMail.execute();
+        } else {
+                Toast.makeText(getApplicationContext(), "Դուք չեք լրացրել Էլ․ հասցեի դաշտը։", Toast.LENGTH_LONG).show();
+        }
+
     }
 }

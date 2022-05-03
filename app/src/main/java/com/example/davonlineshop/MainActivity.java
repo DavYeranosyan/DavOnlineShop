@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
 //                Log.e("Token",mToken);
 //            }
 //        });
-        Common.currentToken = FirebaseInstanceId.getInstance().getToken();
-        Log.e("my", Common.currentToken);
+//        Common.currentToken = FirebaseInstanceId.getInstance().getToken();
+//        Log.e("my", Common.currentToken);
 
     }
 
