@@ -37,7 +37,7 @@ import com.squareup.picasso.Picasso;
 public class AddFragmentFourthList extends Fragment {
 
     ImageButton addImage;
-    EditText addName, addDescription;
+    EditText addName, addDescription, addPhoneNumber;
     Button add;
     StorageReference storageReference;
     FirebaseStorage firebaseStorage;
@@ -52,6 +52,7 @@ public class AddFragmentFourthList extends Fragment {
 
         addName = root.findViewById(R.id.addNameProductList4);
         addDescription = root.findViewById(R.id.addTextDescriptionList4);
+        addPhoneNumber = root.findViewById(R.id.addPhoneNumberList4);
 
         addImage = root.findViewById(R.id.addPhotoList4);
         addImage.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +78,7 @@ public class AddFragmentFourthList extends Fragment {
             }
         });
 
-        add = root.findViewById(R.id.addBtnList4);
+        add = root.findViewById(R.id.cellPersonShow);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +86,7 @@ public class AddFragmentFourthList extends Fragment {
                 String name = addName.getText().toString();
                 String description = addDescription.getText().toString();
 
-                if (name.equals("") || description.equals("")) {
+                if (name.equals("") || description.equals("") || addPhoneNumber.getText().toString().equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setTitle("Ինչ որ բան լրացված չէ։").setPositiveButton("Շատ բարի։)", new DialogInterface.OnClickListener() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -114,6 +115,7 @@ public class AddFragmentFourthList extends Fragment {
                     model.setNameProduct(name);
                     model.setDescription(description);
                     model.setImage_id(image_id);
+                    model.setPhone_number(addPhoneNumber.getText().toString());
                     databaseReference.setValue(model);
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setTitle("Ձեր պրոդուկտը հաջողությամբ ավելացված է։").setPositiveButton("Շատ բարի։)", new DialogInterface.OnClickListener() {

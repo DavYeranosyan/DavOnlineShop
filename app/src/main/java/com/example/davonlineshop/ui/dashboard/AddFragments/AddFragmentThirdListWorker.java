@@ -169,31 +169,14 @@ public class AddFragmentThirdListWorker extends Fragment {
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                 } else {
-                    String[] id_product = {""};
-                    databaseReference1 = FirebaseDatabase.getInstance().getReference().child("list3");
-                    Query query = databaseReference1.orderByChild("nameProduct").equalTo(listTree.get(group.getCheckedRadioButtonId()));
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                for (DataSnapshot child : snapshot.getChildren()) {
-                                    List list = snapshot.getValue(List.class);
-                                    id_product[0] = list.getId();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
                     databaseReference1 = FirebaseDatabase.getInstance().getReference("workerslist3").push();
                     Worker worker = new Worker();
                     worker.setId(databaseReference1.getKey());
                     worker.setEmail(userWorkerEmail);
                     worker.setDescription(addDescription.getText().toString());
-                    worker.setList_product_id(id_product[0]);
+                    worker.setList_product_id(listTree.get(group.getCheckedRadioButtonId()));
                     worker.setPhone_number(addPhoneNumber.getText().toString());
+                    worker.setTable_Name("list3");
                     databaseReference1.setValue(worker);
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setTitle("Նոր աշխատողը հաջողությամբ ավելացված է։").setPositiveButton("Շատ բարի։)", new DialogInterface.OnClickListener() {

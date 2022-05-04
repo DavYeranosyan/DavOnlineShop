@@ -6,8 +6,18 @@ public class List {
     private String description;
     private int price;
     private String image_id;
+    private String phone_number;
 
     public List() {
+    }
+
+    public List(String id, String nameProduct, String description, int price, String image_id, String phone_number) {
+        this.id = id;
+        this.nameProduct = nameProduct;
+        this.description = description;
+        this.price = price;
+        this.image_id = image_id;
+        this.phone_number = phone_number;
     }
 
     public List(String id, String nameProduct, String description, String image_id) {
@@ -23,6 +33,14 @@ public class List {
         this.description = description;
         this.price = price;
         this.image_id = image_id;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
     }
 
     public String getId() {

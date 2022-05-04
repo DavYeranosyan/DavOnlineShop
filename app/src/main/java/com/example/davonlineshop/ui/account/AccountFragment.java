@@ -223,6 +223,7 @@ public class AccountFragment extends Fragment {
                                     auth.signOut();
                                     user_type.setText("");
                                     sharedPreferences.edit().putString("email", "").apply();
+                                    sharedPreferences.edit().putString("user_id", "").apply();
                                     logout.setImageResource(R.drawable.ic_baseline_login_24);
                                     dialog.dismiss();
                                     getActivity().recreate();

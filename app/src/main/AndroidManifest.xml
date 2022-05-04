@@ -36,95 +36,91 @@
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true" />
 
-        <activity android:name=".ui.home.ActivityFirstList">
-           <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.home.ActivityFirstList" />
-        </activity>
-        <activity android:name=".AdminActivity">
+        <activity android:name=".ui.home.infoactivity.ActivityFirstList">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".AdminActivity" />
-        </activity>
-        <activity android:name=".ui.account.accmenu.FeedbackActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.account.accmenu.FeedbackActivity" />
-        </activity>
-        <activity android:name=".ui.account.accmenu.OrderActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.account.accmenu.OrderActivity" />
-        </activity>
-        <activity android:name=".ui.account.accmenu.FavoriteActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.account.accmenu.FavoriteActivity" />
-        </activity>
-        <activity
-            android:name=".ui.account.accmenu.OpenMessageActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.account.accmenu.OpenMessageActivity" />
-        </activity>
-        <activity
-            android:name=".ui.account.accmenu.MessageActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.account.accmenu.MessageActivity" />
-        </activity>
-        <activity
-            android:name=".ui.account.accmenu.SettingsActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.account.accmenu.SettingsActivity" />
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.account.authentication.LoginActivity"
-            android:label="">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.account.authentication.LoginActivity" />
-        </activity>
-        <activity
-            android:name=".ui.account.authentication.RegisterActivity"
-            android:label="">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.account.authentication.RegisterActivity" />
-        </activity>
-        <activity
-            android:name=".ui.account.authentication.ForgetPasswordActivity"
-            android:label="">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.account.authentication.ForgetPasswordActivity" />
+                android:value=".ui.home.infoactivity.ActivityFirstList" />
         </activity>
 
-        <service android:name=".ui.market.MyFireBaseInstanceIdService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".ui.market.MyFireBaseMessagingService"
-            android:stopWithTask="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+        <activity
+            android:name=".ui.home.infoactivity.ActivityPersonWorker">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.home.infoactivity.ActivityPersonWorker"/>
+        </activity>
+
+    <activity android:name=".AdminActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".AdminActivity" />
+    </activity>
+    <activity android:name=".ui.account.accmenu.FeedbackActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ui.account.accmenu.FeedbackActivity" />
+    </activity>
+    <activity android:name=".ui.account.accmenu.OrderActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ui.account.accmenu.OrderActivity" />
+    </activity>
+    <activity android:name=".ui.account.accmenu.FavoriteActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ui.account.accmenu.FavoriteActivity" />
+    </activity>
+    <activity
+        android:name=".ui.account.accmenu.OpenMessageActivity"
+        android:exported="false">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ui.account.accmenu.OpenMessageActivity" />
+    </activity>
+    <activity
+        android:name=".ui.account.accmenu.MessageActivity"
+        android:exported="false">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ui.account.accmenu.MessageActivity" />
+    </activity>
+    <activity
+        android:name=".ui.account.accmenu.SettingsActivity"
+        android:exported="false">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ui.account.accmenu.SettingsActivity" />
+    </activity>
+    <activity
+        android:name=".MainActivity"
+        android:label="@string/app_name">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+    <activity
+        android:name=".ui.account.authentication.LoginActivity"
+        android:label="">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ui.account.authentication.LoginActivity" />
+    </activity>
+    <activity
+        android:name=".ui.account.authentication.RegisterActivity"
+        android:label="">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ui.account.authentication.RegisterActivity" />
+    </activity>
+    <activity
+        android:name=".ui.account.authentication.ForgetPasswordActivity"
+        android:label="">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ui.account.authentication.ForgetPasswordActivity" />
+    </activity>
+
     </application>
 
-</manifest>
+    </manifest>

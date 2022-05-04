@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.davonlineshop.R;
 import com.example.davonlineshop.model.List;
@@ -57,6 +58,7 @@ public class AddFragmentSecondListDriver extends Fragment {
     RadioGroup group;
     String userWorkerEmail = "";
     String userId = "";
+    String prodId = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,7 +87,6 @@ public class AddFragmentSecondListDriver extends Fragment {
         Query query = databaseReference.orderByChild("nameProduct");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             int id = 0;
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -172,31 +173,14 @@ public class AddFragmentSecondListDriver extends Fragment {
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                 } else {
-                    String[] id_product = {""};
-                    databaseReference = FirebaseDatabase.getInstance().getReference().child("list2");
-                    Query query = databaseReference.orderByChild("nameProduct").equalTo(listTree.get(group.getCheckedRadioButtonId()));
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                for (DataSnapshot child : snapshot.getChildren()) {
-                                    List list = snapshot.getValue(List.class);
-                                    id_product[0] = list.getId();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
                     databaseReference = FirebaseDatabase.getInstance().getReference("driverslist2").push();
                     Worker worker = new Worker();
                     worker.setId(databaseReference.getKey());
                     worker.setEmail(userWorkerEmail);
                     worker.setDescription(addDescription.getText().toString());
-                    worker.setList_product_id(id_product[0]);
+                    worker.setList_product_id(listTree.get(group.getCheckedRadioButtonId()));
                     worker.setPhone_number(addPhoneNumber.getText().toString());
+                    worker.setTable_Name("list2");
                     databaseReference.setValue(worker);
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setTitle("Նոր աշխատողը հաջողությամբ ավելացված է։").setPositiveButton("Շատ բարի։)", new DialogInterface.OnClickListener() {

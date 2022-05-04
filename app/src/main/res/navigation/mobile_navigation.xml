@@ -21,13 +21,13 @@
         android:id="@+id/navigation_shopping_cart"
         android:name="com.example.davonlineshop.ui.shoppingcart.ShoppingCartFragment"
         android:label="@string/title_shopping_cart"
-        tools:layout="@layout/fragment_shopping_cart" />
+        tools:layout="@layout/fragment_shopping_card" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.davonlineshop.ui.market.NotificationsFragment"
+        android:name="com.example.davonlineshop.ui.market.MarketProductsFragment"
         android:label="@string/title_market"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_producs_market" />
     <fragment
         android:id="@+id/navigation_account"
         android:name="com.example.davonlineshop.ui.account.AccountFragment"

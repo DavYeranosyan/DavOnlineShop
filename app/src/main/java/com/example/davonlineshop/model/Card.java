@@ -2,16 +2,18 @@ package com.example.davonlineshop.model;
 
 public class Card {
     private String id;
-    private String productID;
-    private String userID;
+    private String product_id;
+    private String table_name;
+    private String user_id;
 
     public Card() {
     }
 
-    public Card(String id, String productID, String userID) {
+    public Card(String id, String product_id, String table_name, String user_id) {
         this.id = id;
-        this.productID = productID;
-        this.userID = userID;
+        this.product_id = product_id;
+        this.table_name = table_name;
+        this.user_id = user_id;
     }
 
     public String getId() {
@@ -22,19 +24,27 @@ public class Card {
         this.id = id;
     }
 
-    public String getProductID() {
-        return productID;
+    public String getProduct_id() {
+        return product_id;
     }
 
-    public void setProductID(String productID) {
-        this.productID = productID;
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getTable_name() {
+        return table_name;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setTable_name(String table_name) {
+        this.table_name = table_name;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 }

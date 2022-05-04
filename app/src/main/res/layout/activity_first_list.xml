@@ -1,56 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".ui.home.ActivityFirstList"
+    tools:context=".ui.home.infoactivity.ActivityFirstList"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <TextView
-        android:id="@+id/textView7"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:text="Անվանում"
-        android:textAllCaps="true"
-        android:textColor="#000000"
-        android:textSize="25sp" />
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:padding="20dp"
-        android:text="Նկարագրության դաշտ"
-        android:textColor="#000000"
-        android:textSize="20sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="361dp"
-            android:layout_height="wrap_content"
-            android:background="#FDD835"
-            android:text="Ավելացնել զամբյուղ" />
-
-        <ImageView
-            android:id="@+id/imageView3"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="49dp"
-            android:background="#FDD835"
-            android:src="@drawable/ic_baseline_shopping_cart_24" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/deleteBtnForAdmin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FF0000"
+                    android:text="Հեռացնել հայտարարությունը"
+                    tools:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:id="@+id/imageProductShow"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp"
+                        android:layout_margin="10dp"
+                        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/border_log"
+                    android:gravity="top"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/nameProductShow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:text="Անվանում"
+                        android:textAllCaps="true"
+                        android:textColor="#000000"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:id="@+id/descriptionShow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:padding="20dp"
+                        android:text="Նկարագրության դաշտ"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:gravity="end"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/priceShow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:gravity="end"
+                            android:padding="5dp"
+                            android:textColor="#000000"
+                            android:textSize="22sp" />
+
+                        <ImageView
+                            android:id="@+id/btnFavoriteShow"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            app:srcCompat="@drawable/dont_favorite" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true">
+
+                    <LinearLayout
+                        android:id="@+id/workersLayoutShow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical"
+                        android:padding="5dp"
+                        tools:visibility="gone">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:text="Գրանցված աշխատողներ"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:visibility="gone" />
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/goCellLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:padding="5dp"
+                tools:visibility="gone">
+
+                <Button
+                    android:id="@+id/goCellinNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:text="Զանգահարել" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/addCardLayoutShow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                tools:visibility="visible">
+
+                <Button
+                    android:id="@+id/addBtnCard"
+                    android:layout_width="361dp"
+                    android:layout_height="wrap_content"
+                    android:background="#FDD835"
+                    android:text="Ավելացնել զամբյուղ" />
+
+                <ImageView
+                    android:id="@+id/addImageCardShow"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="#FDD835"
+                    android:src="@drawable/ic_baseline_shopping_cart_24" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

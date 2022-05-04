@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.davonlineshop.R;
+import com.example.davonlineshop.model.Chat;
 import com.example.davonlineshop.model.Message;
 import com.example.davonlineshop.model.Type;
 import com.example.davonlineshop.model.User;
@@ -88,7 +89,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot child : snapshot.getChildren()) {
-                        Message message = child.getValue(Message.class);
+                        Chat message = child.getValue(Chat.class);
                         messageNull = true;
                         LinearLayout linearLayout  =new LinearLayout(getApplication());
                         ImageView image = new ImageView(getApplication());

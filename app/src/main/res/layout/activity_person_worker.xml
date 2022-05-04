@@ -3,51 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF"
-    tools:context=".ui.dashboard.AddFragments.AddFragmentThirdListWorker">
-
-    <ScrollView
+    tools:context=".ui.home.infoactivity.ActivityPersonWorker">
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/addPhotoList4"
+            <ImageView
+                android:id="@+id/imagePerson"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:src="@android:drawable/ic_input_add" />
 
-            <EditText
-                android:id="@+id/addNameProductList4"
+            <TextView
+                android:id="@+id/nameSurnamePerson"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Նեմուծեք անվանումը"
-                android:inputType="textPersonName"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:hint="Անուն Ազգանուն"
+                android:padding="1dp"
                 android:textColor="#000000"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/addTextDescriptionList4"
+            <TextView
+                android:id="@+id/personPhoneNumberForCall"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Նկարագրության դաշտ"
-                android:inputType="textMultiLine|textImeMultiLine"
-                android:textColor="#000000" />
-
-            <EditText
-                android:id="@+id/addPhoneNumberList4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Հեռ․ Օր․՝ +37477 123456"
-                android:inputType="textUri|number|phone" />
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:hint="Հեռախոսահամար"
+                android:padding="5dp"
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,14 +52,13 @@
 
                 <Button
                     android:id="@+id/cellPersonShow"
-                    android:layout_width="160dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimary"
                     android:padding="15dp"
-                    android:text="Ավելացնել"
+                    android:text="Զանգահարել"
                     android:textColor="#F1F1F1" />
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
-
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

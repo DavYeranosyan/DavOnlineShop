@@ -43,10 +43,9 @@ public class DashboardFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot child : snapshot.getChildren()) {
-                        if (child.getValue(User.class).getType().equals(Type.ADMIN) || child.getValue(User.class).getType().equals(Type.MANAGER)) {
+                        if (child.getValue(User.class).getType().equals(Type.ADMIN)/* || child.getValue(User.class).getType().equals(Type.MANAGER)*/) {
                             bool = true;
                             replaceFragments(DashboardFragmentForAdminAndManager.class);
-                            Log.d("my", "hasav1" + bool);
                         }
                         break;
                     }

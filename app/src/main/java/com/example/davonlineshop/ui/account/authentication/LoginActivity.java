@@ -4,17 +4,23 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +39,7 @@ import com.example.davonlineshop.R;
 import com.example.davonlineshop.model.Type;
 import com.example.davonlineshop.model.User;
 import com.example.davonlineshop.ui.account.AccountFragment;
+import com.example.davonlineshop.ui.home.infoactivity.ActivityPersonWorker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -43,6 +50,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -149,29 +157,13 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                             spinner.show();
-//                            databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
-//                            Query query = databaseReference.orderByChild("email").equalTo(email.getText().toString());
-//                            query.addListenerForSingleValueEvent(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                    if (snapshot.exists()) {
-//                                        for (DataSnapshot child : snapshot.getChildren()) {
-//                                            User user = child.getValue(User.class);
-//                                            if (user.getType().toString().equals("ADMIN")){
-//                                                finish();
-//                                            }else{
                             SharedPreferences.Editor preferences = getSharedPreferences(Email, Context.MODE_PRIVATE).edit();
                             String e = email.getText().toString().toLowerCase();
-                            Log.e("my", "onComplete: " + e);
                             preferences.putString("email", e);
+                            getUserId(email.getText().toString(), preferences);
                             preferences.apply();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
-//                                            }
-//                                            break;
-//                                        }
-//                                    } else {
-//                                    }
                         } else {
                             Toast.makeText(getApplicationContext(), "Ձեր հաշիվը վերիֆիկացված չէ։(\nԽնդրում ենք մուտք գործեք Ձեր Էլեկտրոնային փոստ Ձեզ մեր կողմից ւղարկվել է հղում սեղմեք հղման վրա եվ դուք կվերիֆիկացվեք", Toast.LENGTH_LONG).show();
                         }
@@ -181,6 +173,28 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void getUserId(String email, SharedPreferences.Editor pref) {
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+        Query query = databaseReference.orderByChild("email").equalTo(email);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot child : snapshot.getChildren()) {
+                        User user = child.getValue(User.class);
+                        String id = user.getId();
+                        pref.putString("user_id", id);
+                        pref.apply();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void forgetPassword(View view) {

@@ -5,16 +5,18 @@ public class Worker {
     private String email;
     private String description;
     private String phone_number;
+    private String table_Name;
     private String list_product_id;
 
     public Worker() {
     }
 
-    public Worker(String id, String email, String description, String phone_number, String list_product_id) {
+    public Worker(String id, String email, String description, String phone_number, String table_Name, String list_product_id) {
         this.id = id;
         this.email = email;
         this.description = description;
         this.phone_number = phone_number;
+        this.table_Name = table_Name;
         this.list_product_id = list_product_id;
     }
 
@@ -48,6 +50,14 @@ public class Worker {
 
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
+    }
+
+    public String getTable_Name() {
+        return table_Name;
+    }
+
+    public void setTable_Name(String table_Name) {
+        this.table_Name = table_Name;
     }
 
     public String getList_product_id() {

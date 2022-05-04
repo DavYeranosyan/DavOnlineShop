@@ -1,14 +1,17 @@
 package com.example.davonlineshop.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.davonlineshop.R;
 import com.example.davonlineshop.model.List;
+import com.example.davonlineshop.ui.home.infoactivity.ActivityFirstList;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,17 +40,20 @@ import java.util.UUID;
 public class HomeFragment extends Fragment {
 
     ImageView imageView;
+    SharedPreferences sharedPreferences;
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    ImageView photo1;
-    ImageView photo2;
-    TextView textView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+
+//        SharedPreferences.Editor preferences = getSharedPreferences("Product", Context.MODE_PRIVATE).edit();
+//        preferences.putString("product", product_id);
+//        preferences.apply();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
@@ -58,119 +65,28 @@ public class HomeFragment extends Fragment {
 //               startActivity(new Intent(getContext(), ActivityFirstList.class));
 //           }
 //       });
-        TextView name = root.findViewById(R.id.nameHome);
-        photo1 = root.findViewById(R.id.photo1);
-        photo1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), ActivityFirstList.class));
-            }
-        });
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("list1");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot child : snapshot.getChildren()) {
-                        List list = child.getValue(List.class);
-                        name.setText(list.getNameProduct());
-                        storageReference = firebaseStorage.getReference().child("images/" + list.getNameProduct() + list.getPrice());
-                        Task<Uri> url =  storageReference.getDownloadUrl()
-                                .addOnCompleteListener(new OnCompleteListener<Uri>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Uri> task) {
-                                if (task.isSuccessful()) {
-                                    String fileUrl = task.getResult().toString().substring(0, task.getResult().toString().indexOf("token"));
-                                    Picasso.get().load(fileUrl).into(photo1);
-                                }
-                            }
-                        });
-//                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                    @Override
-//                                    public void onSuccess(Uri uri) {
-//                                        String url = uri.toString();
-////                                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-////                                        builder.setMessage(url).setPositiveButton("Շատ բարի։)", new DialogInterface.OnClickListener() {
-////                                            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-////                                            @Override
-////                                            public void onClick(DialogInterface dialog, int which) {
-//////                                                replaceFragments(DashboardFragmentForAdminAndManager.class);
-////                                            }
-////                                        });
-////                                        AlertDialog alertDialog = builder.create();
-////                                        alertDialog.show();
-////                                        Picasso.get().load(url).into(photo1);
-//                                    }
-//                                }).addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception exception) {
-//                                // Handle any errors
-//                            }
-//                        });
-//                        UploadTask uploadTask = storageReference.putBytes(data);
-//                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//
-//                            @Override
-//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(
-//                                        new OnCompleteListener<Uri>() {
-//
-//                                            @Override
-//                                            public void onComplete(@NonNull Task<Uri> task) {
-//                                                String fileLink = task.getResult().toString();
-//                                                //next work with URL
-//
-//                                            }
-//                                        });
-//
-//                            UploadTask uploadTask = storageReference.putFile(new Intent().getData());
-//                            Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-//                                @Override
-//                                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-//                                    if (task.isSuccessful()) {
-//                                        Toast.makeText(getContext(), "Succes", Toast.LENGTH_LONG).show();
-//                                    }
-//                                    return storageReference.getDownloadUrl();
-//                                }
-//                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-//                                @Override
-//                                public void onComplete(@NonNull Task<Uri> task) {
-//                                    if (task.isSuccessful()) {
-//                                        Log.d("AddImage", "Hasav");
-//                                        String fileUrl = task.getResult().toString().substring(0, task.getResult().toString().indexOf("token"));
-//                                        Picasso.get().load(fileUrl).into(photo1);
-//                                    }
-//                                }
-//                            });
+//        TextView name = root.findViewById(R.id.nameHome);
+//        photo1 = root.findViewById(R.id.photo1);
+//        photo1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getContext(), ActivityFirstList.class));
+//            }
+//        });
 
-//                        getImage = databaseReference.child("images/");
-//
-//                        getImage.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                if (dataSnapshot.hasChild(list.getImage_id()))
-//                                {
-//                                    String image = snapshot.child(list.getImage_id()).getValue().toString();
-//                                    Picasso.get().load(image).into(photo1);
-//                                }
-////                                String link = dataSnapshot.getValue(String.class);
-////                                Picasso.get().load(link).into(photo1);
-//                            }
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                                Toast.makeText(getContext(), "Error Loading Image", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-                        break;
-                    }
-                }
-            }
+        LinearLayout linearLayoutList1 = root.findViewById(R.id.linearLayoutLis1);
+        searchListsProductsAndShow("list1", linearLayoutList1);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        LinearLayout linearLayoutList2 = root.findViewById(R.id.linearLayoutList2);
+        searchListsProductsAndShow("list2", linearLayoutList2);
 
-            }
-        });
+        LinearLayout linearLayoutList3 = root.findViewById(R.id.linearLayoutList3);
+        searchListsProductsAndShow("list3", linearLayoutList3);
+
+        LinearLayout linearLayoutList4 = root.findViewById(R.id.linearLayoutList4);
+        searchListsProductsAndShow("list4", linearLayoutList4);
+
+
 //        photo1 = root.findViewById(R.id.photo1);
 //        photo1.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -243,6 +159,75 @@ public class HomeFragment extends Fragment {
 //        });
 
         return root;
+    }
+
+
+    public void searchListsProductsAndShow(String tableName, LinearLayout linearLayout) {
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(tableName);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot child : snapshot.getChildren()) {
+                        List list = child.getValue(List.class);
+                        LinearLayout newLayout = new LinearLayout(getActivity());
+                        newLayout.setOrientation(LinearLayout.VERTICAL);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(350, 350);
+                        LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(350, 150);
+                        newLayout.setPadding(15, 15, 15, 15);
+                        ImageView image = new ImageView(getContext());
+                        TextView nameProduct = new TextView(getContext());
+                        nameProduct.setText(list.getNameProduct());
+                        nameProduct.setTextColor(Color.BLACK);
+                        nameProduct.setTextSize(16);
+                        newLayout.addView(image, layoutParams);
+                        newLayout.addView(nameProduct, layoutParams1);
+                        linearLayout.addView(newLayout);
+                        String pathPhoto = "";
+                        if (tableName.equals("list1")){
+                            pathPhoto = list.getNameProduct() + list.getPrice()                                                                                                                                                                                                                    ;
+                        }else {pathPhoto = list.getNameProduct();}
+                        storageReference = firebaseStorage.getReference().child("images/" + pathPhoto);
+                        Task<Uri> url = storageReference.getDownloadUrl()
+                                .addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Uri> task) {
+                                        if (task.isSuccessful()) {
+                                            String fileUrl = task.getResult().toString().substring(0, task.getResult().toString().indexOf("token"));
+                                            Picasso.get().load(fileUrl).into(image);
+                                        }
+                                    }
+                                });
+                        nameProduct.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SharedPreferences.Editor preferences = getActivity().getSharedPreferences("Product", Context.MODE_PRIVATE).edit();
+                                preferences.putString("tableName", tableName);
+                                preferences.putString(tableName, list.getId());
+                                preferences.apply();
+                                startActivity(new Intent(getContext(), ActivityFirstList.class));
+                            }
+                        });
+                        image.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SharedPreferences.Editor preferences = getActivity().getSharedPreferences("Product", Context.MODE_PRIVATE).edit();
+                                preferences.putString("tableName", tableName);
+                                preferences.putString(tableName, list.getId());
+                                preferences.apply();
+                                startActivity(new Intent(getContext(), ActivityFirstList.class));
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
 
