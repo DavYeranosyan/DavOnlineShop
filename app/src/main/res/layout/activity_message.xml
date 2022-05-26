@@ -8,38 +8,21 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/layout_fullscreen"
+            android:id="@+id/layout_Fullscreen_message"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/message_label_first"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:onClick="clickMess"
-                    app:srcCompat="@drawable/ic_baseline_support_agent_24"
-                    tools:ignore="OnClick" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="Ադմինիստրատոր" />
-
-            </LinearLayout>
-
             <TextView
-                android:id="@+id/textMessageIsEmpty"
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="558dp"
+                android:gravity="center"
+                android:text="Դուք դեռևս ոչ մեկի հետ չեք հաղորդակցվել։("
                 android:textColor="#000000" />
         </LinearLayout>
     </ScrollView>

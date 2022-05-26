@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@drawable/border_log"
+                android:background="@drawable/border_full_project"
                 android:padding="5dp">
 
                 <ImageView

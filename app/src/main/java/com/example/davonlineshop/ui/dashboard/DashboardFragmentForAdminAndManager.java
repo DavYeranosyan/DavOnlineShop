@@ -107,17 +107,6 @@ public class DashboardFragmentForAdminAndManager extends Fragment {
                 }
             }
         });
-//        if (!bool) {
-//            root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-////            sharedPreferences = getActivity().getPreferences(MODE_PRIVATE);
-////            String s = sharedPreferences.getString("email", "");
-////            Log.d("my", "onCreateView: " + s);
-//        } else {
-//            root = inflater.inflate(R.layout.fragment_dashboard_for_manager, container, false);
-////            sharedPreferences = getActivity().getPreferences(MODE_PRIVATE);
-////            String s = sharedPreferences.getString("email", "");
-////            Log.d("my", "onCreateView: " + s);
-//        }
         return root;
     }
 

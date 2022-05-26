@@ -1,50 +1,30 @@
 package com.example.davonlineshop.model;
 
 public class Message {
-    private String id;
-    private String from_id;
-    private String to_id;
-    private String message;
+    private String id_one;
+    private String id_two;
 
     public Message() {
     }
 
-    public Message(String id, String from_id, String to_id, String message) {
-        this.id = id;
-        this.from_id = from_id;
-        this.to_id = to_id;
-        this.message = message;
+    public Message(String id_one, String id_two) {
+        this.id_one = id_one;
+        this.id_two = id_two;
     }
 
-    public String getId() {
-        return id;
+    public String getId_one() {
+        return id_one;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId_one(String id_one) {
+        this.id_one = id_one;
     }
 
-    public String getFrom_id() {
-        return from_id;
+    public String getId_two() {
+        return id_two;
     }
 
-    public void setFrom_id(String from_id) {
-        this.from_id = from_id;
-    }
-
-    public String getTo_id() {
-        return to_id;
-    }
-
-    public void setTo_id(String to_id) {
-        this.to_id = to_id;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public void setId_two(String id_two) {
+        this.id_two = id_two;
     }
 }

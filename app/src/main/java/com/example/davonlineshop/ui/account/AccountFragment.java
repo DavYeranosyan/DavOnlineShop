@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ import com.example.davonlineshop.R;
 import com.example.davonlineshop.model.Type;
 import com.example.davonlineshop.model.User;
 import com.example.davonlineshop.ui.account.accmenu.FavoriteActivity;
-import com.example.davonlineshop.ui.account.accmenu.FeedbackActivity;
 import com.example.davonlineshop.ui.account.accmenu.MessageActivity;
 import com.example.davonlineshop.ui.account.accmenu.OrderActivity;
 import com.example.davonlineshop.ui.account.accmenu.SettingsActivity;
@@ -43,8 +41,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
-import java.util.UUID;
 
 public class AccountFragment extends Fragment {
     SharedPreferences sharedPreferences;
@@ -71,14 +67,14 @@ public class AccountFragment extends Fragment {
         user_type = root.findViewById(R.id.user_type);
         message_view = root.findViewById(R.id.message_label);
         favorite_view = root.findViewById(R.id.favorite_label);
-//        order_view = root.findViewById(R.id.order_label);
+        order_view = root.findViewById(R.id.order_view);
         setting_view = root.findViewById(R.id.setting_label);
         feedback_view = root.findViewById(R.id.feedback_label);
         about_view = root.findViewById(R.id.about_label);
         log_in_out_view = root.findViewById(R.id.login_label);
         feedback = root.findViewById(R.id.feedback_btn);
         about = root.findViewById(R.id.about_btn);
-//        orders = root.findViewById(R.id.orders);
+        orders = root.findViewById(R.id.orders);
         message = root.findViewById(R.id.mesages);
         favorite = root.findViewById(R.id.favorite);
         setting = root.findViewById(R.id.settings);
@@ -118,7 +114,6 @@ public class AccountFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             startActivity(new Intent(getActivity(), LoginActivity.class));
-                            getActivity().finish();
                         }
                     });
                     AlertDialog alertDialog = builder.create();
@@ -137,7 +132,7 @@ public class AccountFragment extends Fragment {
                             User user = child.getValue(User.class);
                             user_id_our_base = user.getId();
                             storageReference = firebaseStorage.getReference().child("profile_images/" + user_id_our_base);
-                            Task<Uri> url =  storageReference.getDownloadUrl()
+                            Task<Uri> url = storageReference.getDownloadUrl()
                                     .addOnCompleteListener(new OnCompleteListener<Uri>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Uri> task) {
@@ -152,11 +147,7 @@ public class AccountFragment extends Fragment {
                                 logout.setImageResource(R.drawable.ic_logout);
                                 user_type.setText("Ադմինիստրատոր");
                                 break;
-//                                auth.signOut();
-//                                sharedPreferences.edit().putString("email", "").apply();
-//                                logout.setImageResource(R.drawable.ic_baseline_login_24);
                             } else if (user.getType() == Type.MANAGER) {
-//                                Toast.makeText(getContext(), user.getName() + " " + user.getSurname(), Toast.LENGTH_LONG).show();
                                 textView.setText(user.getName() + " " + user.getSurname());
                                 user_type.setText("Գործընկեր");
                                 Toast.makeText(getContext(), user.getType() + " ", Toast.LENGTH_SHORT).show();
@@ -262,60 +253,93 @@ public class AccountFragment extends Fragment {
         });
 
 
-
+        sharedPreferences = getActivity().getSharedPreferences("email", Context.MODE_PRIVATE);
+        String user_email = sharedPreferences.getString("email", "");
         favorite_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), FavoriteActivity.class));
+                if (user_email.equals("")) {
+                    Toast.makeText(getContext(), "Դուք մուտք չեք գործել հաշիվ։", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(getContext(), FavoriteActivity.class));
+                }
             }
         });
         favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), FavoriteActivity.class));
+                if (user_email.equals("")) {
+                    Toast.makeText(getContext(), "Դուք մուտք չեք գործել հաշիվ։", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(getContext(), FavoriteActivity.class));
+                }
             }
         });
-
 
 
         message_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), MessageActivity.class));
+                if (user_email.equals("")) {
+                    Toast.makeText(getContext(), "Դուք մուտք չեք գործել հաշիվ։", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(getContext(), MessageActivity.class));
+                }
             }
         });
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), MessageActivity.class));
+                if (user_email.equals("")) {
+                    Toast.makeText(getContext(), "Դուք մուտք չեք գործել հաշիվ։", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(getContext(), MessageActivity.class));
+                }
             }
         });
 
-//        order_view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(getContext(), OrderActivity.class));
-//
-//            }
-//        });
-//        orders.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(getContext(), OrderActivity.class));
-//            }
-//        });
+        order_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharedPreferences = getActivity().getSharedPreferences("email", Context.MODE_PRIVATE);
+                if (sharedPreferences.getString("email", "").equals("")){
+                    Toast.makeText(getContext(), "Դուք մուտք չեք գործել հաշիվ։", Toast.LENGTH_SHORT).show();
+                }else {
+                    startActivity(new Intent(getContext(), OrderActivity.class));
+                }
+            }
+        });
+        orders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharedPreferences = getActivity().getSharedPreferences("email", Context.MODE_PRIVATE);
+                if (sharedPreferences.getString("email", "").equals("")){
+                    Toast.makeText(getContext(), "Դուք մուտք չեք գործել հաշիվ։", Toast.LENGTH_SHORT).show();
+                }else {
+                    startActivity(new Intent(getContext(), OrderActivity.class));
+                }
+            }
+        });
 
 
         setting_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), SettingsActivity.class));
+                if (user_email.equals("")) {
+                    Toast.makeText(getContext(), "Դուք մուտք չեք գործել հաշիվ։", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(getContext(), SettingsActivity.class));
+                }
             }
         });
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), SettingsActivity.class));
+                if (user_email.equals("")) {
+                    Toast.makeText(getContext(), "Դուք մուտք չեք գործել հաշիվ։", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(getContext(), SettingsActivity.class));
+                }
             }
         });
 
@@ -323,13 +347,20 @@ public class AccountFragment extends Fragment {
         feedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), FeedbackActivity.class));
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                String phone_number = "tel:" + "+37433309603";
+                intent.setData(Uri.parse(phone_number));
+                startActivity(intent);
             }
         });
         feedback_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), FeedbackActivity.class));
+
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                String phone_number = "tel:" + "+37433309603";
+                intent.setData(Uri.parse(phone_number));
+                startActivity(intent);
             }
         });
 
@@ -364,13 +395,6 @@ public class AccountFragment extends Fragment {
                 alertDialog.show();
             }
         });
-
-
-
-
-
-
-
         return root;
     }
 
@@ -378,9 +402,9 @@ public class AccountFragment extends Fragment {
         getActivity().recreate();
     }
 
-    public void refreshProfilePhoto(){
+    public void refreshProfilePhoto() {
         storageReference = firebaseStorage.getReference().child("profile_images/" + user_id_our_base);
-        Task<Uri> url =  storageReference.getDownloadUrl()
+        Task<Uri> url = storageReference.getDownloadUrl()
                 .addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
@@ -395,7 +419,7 @@ public class AccountFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        storageReference = firebaseStorage.getReference("profile_images/"   +  user_id_our_base);
+        storageReference = firebaseStorage.getReference("profile_images/" + user_id_our_base);
         if (requestCode == 1) {
             UploadTask uploadTask = storageReference.putFile(data.getData());
             Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {

@@ -3,7 +3,6 @@ package com.example.davonlineshop.ui.dashboard;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,17 +57,6 @@ public class DashboardFragment extends Fragment {
 
             }
         });
-        //        if (!bool) {
-//            root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-////            sharedPreferences = getActivity().getPreferences(MODE_PRIVATE);
-////            String s = sharedPreferences.getString("email", "");
-////            Log.d("my", "onCreateView: " + s);
-//        } else {
-//            root = inflater.inflate(R.layout.fragment_dashboard_for_manager, container, false);
-////            sharedPreferences = getActivity().getPreferences(MODE_PRIVATE);
-////            String s = sharedPreferences.getString("email", "");
-////            Log.d("my", "onCreateView: " + s);
-//        }
         return root;
     }
 

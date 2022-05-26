@@ -1,6 +1,9 @@
 package com.example.davonlineshop.ui.shoppingcart;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -24,11 +27,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.davonlineshop.R;
 import com.example.davonlineshop.model.Card;
-import com.example.davonlineshop.model.Favorite;
 import com.example.davonlineshop.model.List;
 import com.example.davonlineshop.model.Order;
-import com.example.davonlineshop.model.Type;
-import com.example.davonlineshop.model.User;
 import com.example.davonlineshop.ui.home.infoactivity.ActivityFirstList;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,11 +55,13 @@ public class ShoppingCartFragment extends Fragment {
     LinearLayout cardLayoutFullScreen;
     String user_id, user_email;
     EditText getLocation, getPhoneNumber;
+    TextView full_price;
     Button addOrder;
     LinearLayout.LayoutParams param;
 
     TreeMap<String, Integer> listTree;
     TreeMap<String, String> listTree1;
+    int fullPrice = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,20 +74,35 @@ public class ShoppingCartFragment extends Fragment {
         databaseReference = firebaseDatabase.getReference();
         firebaseStorage = FirebaseStorage.getInstance();
 
+        full_price = root.findViewById(R.id.full_Price_Card);
         getLocation = root.findViewById(R.id.getContactLocation);
         getPhoneNumber = root.findViewById(R.id.getContactPhoneNumber);
         cardLayoutFullScreen = root.findViewById(R.id.cardLayoutFull);
         addOrder = new Button(getContext());
         addOrder.setText("Պատվիրել");
         addOrder.setVisibility(View.VISIBLE);
-        addOrder.setBackgroundResource(R.drawable.border_log);
+        addOrder.setBackgroundResource(R.drawable.border_full_project);
         addOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getLocation.getText().toString().equals("") || getPhoneNumber.getText().toString().equals("")){
+                if (getLocation.getText().toString().equals("") || getPhoneNumber.getText().toString().equals("")) {
                     Toast.makeText(getContext(), "Ինչ որ բան այն չէ։(", Toast.LENGTH_LONG).show();
-                }else {
-                    addProductsInOrder(getLocation.getText().toString(), getPhoneNumber.getText().toString());
+                } else {
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("orders").push();
+                    String order_id = reference.getKey();
+                    for (Map.Entry<String, Integer> entry : listTree.entrySet()) {
+                        addProductsInOrder(order_id, getLocation.getText().toString(), getPhoneNumber.getText().toString(), listTree1.get(entry.getKey()), entry.getKey(), entry.getValue());
+                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Պատվերը գրանցված է։)")
+                            .setNegativeButton("Լավ", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    getActivity().recreate();
+                                }
+                            });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
             }
         });
@@ -146,7 +163,7 @@ public class ShoppingCartFragment extends Fragment {
                         newLayout3.setOrientation(LinearLayout.HORIZONTAL);
                         newLayout3.setGravity(Gravity.END);
                         fullLayout.setOrientation(LinearLayout.HORIZONTAL);
-                        fullLayout.setBackgroundResource(R.drawable.border_log);
+                        fullLayout.setBackgroundResource(R.drawable.border_full_project);
                         fullLayout.setPadding(10, 10, 10, 10);
                         fullLayout.setPadding(15, 15, 15, 15);
                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
@@ -181,6 +198,8 @@ public class ShoppingCartFragment extends Fragment {
                         newLayout1.addView(deleteIcon, layoutParams4);
                         TextView price = new TextView(getContext());
                         price.setText(list.getPrice() + " AMD");
+                        fullPrice += list.getPrice();
+                        full_price.setText("Ընդհանուր գումար ->" + fullPrice);
                         price.setTextSize(20);
                         price.setGravity(Gravity.END);
 
@@ -190,13 +209,16 @@ public class ShoppingCartFragment extends Fragment {
                         ImageView up = new ImageView(getContext());
                         up.setImageResource(R.drawable.up);
                         up.setOnClickListener(new View.OnClickListener() {
+                            @SuppressLint("SetTextI18n")
                             @RequiresApi(api = Build.VERSION_CODES.N)
                             @Override
                             public void onClick(View v) {
                                 int i = Integer.parseInt(count.getText().toString()) + 1;
                                 count.setText(String.valueOf(i));
                                 int j = Integer.parseInt(count.getText().toString()) * list.getPrice();
-                                price.setText(String.valueOf(j) + "AMD");
+                                fullPrice = fullPrice - (i - 1) * list.getPrice() + j;
+                                full_price.setText("Ընդհանուր գումար ->" + fullPrice);
+                                price.setText(j + "AMD");
                                 listTree.replace(product_id, i);
                             }
                         });
@@ -209,10 +231,12 @@ public class ShoppingCartFragment extends Fragment {
                                 int i = Integer.parseInt(count.getText().toString());
                                 if (i > 1) {
                                     i = i - 1;
+                                    fullPrice = fullPrice - list.getPrice();
                                 }
                                 count.setText(String.valueOf(i));
                                 listTree.replace(product_id, i);
                                 int j = Integer.parseInt(count.getText().toString()) * list.getPrice();
+                                full_price.setText("Ընդհանուր գումար ->" + fullPrice);
                                 price.setText(String.valueOf(j) + "AMD");
                             }
                         });
@@ -298,24 +322,23 @@ public class ShoppingCartFragment extends Fragment {
 
     }
 
-    public void addProductsInOrder(String location, String phone) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("orders").push();
-        for (Map.Entry<String, Integer> entry : listTree.entrySet()) {
-            Order order = new Order();
-            order.setId(databaseReference.getKey());
-            order.setProduct_id(entry.getKey());
-            order.setTable_name(listTree1.get(entry.getKey()));
-            order.setCount(entry.getValue().toString());
-            order.setEmail(user_email);
-            order.setPhone_number(phone);
-            order.setLocation(location);
-            databaseReference.setValue(order);
-            Toast.makeText(getContext(), "Պատվերը գրանցված է։)", Toast.LENGTH_LONG).show();
-            deleteProduct(entry.getKey());
-        }
-        getActivity().recreate();
+    public void addProductsInOrder(String order_id, String location, String phone, String table_name, String prod_id, int c) {
+        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("orders").push();
+
+        Order order = new Order();
+        order.setId(order_id);
+        order.setProduct_id(prod_id);
+        order.setTable_name(table_name);
+        order.setCount(c);
+        order.setEmail(user_email);
+        order.setPhone_number(phone);
+        order.setLocation(location);
+        databaseReference1.setValue(order);
+        deleteProduct(prod_id);
+
     }
-    public void deleteProduct(String id){
+
+    public void deleteProduct(String id) {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("card");
         Query query = databaseReference.orderByChild("product_id").equalTo(id);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -323,7 +346,12 @@ public class ShoppingCartFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot child : snapshot.getChildren()) {
-                                child.getRef().removeValue();
+                        Card card = child.getValue(Card.class);
+                        if (card.getUser_id().equals(user_id)) {
+                            listTree.remove(id);
+                            listTree1.remove(id);
+                            child.getRef().removeValue();
+                        }
                     }
                 }
             }

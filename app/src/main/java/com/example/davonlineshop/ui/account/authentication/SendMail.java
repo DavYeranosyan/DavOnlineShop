@@ -19,6 +19,8 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
    private Context context;
    private Session session;
    private String email,  subject, message;
+
+
    public SendMail(Context context, String email, String subject, String message){
        this.context = context;
        this.email = email;

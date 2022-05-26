@@ -6,15 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.account.accmenu.OrderActivity">
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/fullScreenOrderLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </androidx.core.widget.NestedScrollView>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Պատվերներ չկա։"
+                android:textColor="#000000" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

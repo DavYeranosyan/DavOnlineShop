@@ -4,7 +4,8 @@ public class Order {
     private String id;
     private String product_id;
     private String table_name;
-    private String count;
+    private Integer count;
+    private String full_price;
     private String email;
     private String phone_number;
     private String location;
@@ -12,11 +13,12 @@ public class Order {
     public Order() {
     }
 
-    public Order(String id, String product_id, String table_name, String count, String email, String phone_number, String location) {
+    public Order(String id, String product_id, String table_name, Integer count, String full_price, String email, String phone_number, String location) {
         this.id = id;
         this.product_id = product_id;
         this.table_name = table_name;
         this.count = count;
+        this.full_price = full_price;
         this.email = email;
         this.phone_number = phone_number;
         this.location = location;
@@ -46,12 +48,20 @@ public class Order {
         this.table_name = table_name;
     }
 
-    public String getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(String count) {
+    public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public String getFull_price() {
+        return full_price;
+    }
+
+    public void setFull_price(String full_price) {
+        this.full_price = full_price;
     }
 
     public String getEmail() {

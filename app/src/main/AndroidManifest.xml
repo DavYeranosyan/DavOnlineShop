@@ -54,12 +54,7 @@
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".AdminActivity" />
     </activity>
-    <activity android:name=".ui.account.accmenu.FeedbackActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ui.account.accmenu.FeedbackActivity" />
-    </activity>
-    <activity android:name=".ui.account.accmenu.OrderActivity">
+        <activity android:name=".ui.account.accmenu.OrderActivity">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".ui.account.accmenu.OrderActivity" />
@@ -101,21 +96,21 @@
     </activity>
     <activity
         android:name=".ui.account.authentication.LoginActivity"
-        android:label="">
+        android:label="Մուտք">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".ui.account.authentication.LoginActivity" />
     </activity>
     <activity
         android:name=".ui.account.authentication.RegisterActivity"
-        android:label="">
+        android:label="Գրանցում">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".ui.account.authentication.RegisterActivity" />
     </activity>
     <activity
         android:name=".ui.account.authentication.ForgetPasswordActivity"
-        android:label="">
+        android:label="Վերականգնել">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".ui.account.authentication.ForgetPasswordActivity" />

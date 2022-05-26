@@ -2,6 +2,7 @@ package com.example.davonlineshop.ui.account.authentication;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -80,61 +81,6 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
     }
 
-    //    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        View root = inflater.inflate(R.layout.activity_login, container, true);
-//        email = root.findViewById(R.id.emailLog);
-//        password = root.findViewById(R.id.passwordLog);
-//        firebaseAuth = FirebaseAuth.getInstance();
-//        signIn = root.findViewById(R.id.signIn);
-//        signIn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (!email.getText().toString().equals("") && !password.getText().toString().equals("")) {
-//                    firebaseAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<AuthResult> task) {
-//                            if (!task.isSuccessful()) {
-//                                Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
-//                            } else {
-//                                if (firebaseAuth.getCurrentUser().isEmailVerified()) {
-//                                    SharedPreferences.Editor preferences = getActivity().getSharedPreferences(Email, Context.MODE_PRIVATE).edit();
-//                                    String e = email.getText().toString().toLowerCase();
-//                                    Log.e("my", "onComplete: " + e);
-//                                    preferences.putString("email", e);
-//                                    preferences.apply();
-//                                    startActivity(new Intent(getActivity(), MainActivity.class));
-//                                } else {
-//                                    Toast.makeText(getContext(), "Email is invalid verified", Toast.LENGTH_LONG).show();
-//                                }
-//                            }
-//                        }
-//                    });
-//                } else {
-//                    Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
-//        signUp = root.findViewById(R.id.signUp);
-//        signUp.setOnClickListener(new View.OnClickListener() {
-//            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-//            @Override
-//            public void onClick(View v) {
-//                Fragment f = new RegisterActivity();
-//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frag_acc, f);
-//                transaction.commit();
-//            }
-//        });
-//        forgetPass = root.findViewById(R.id.forget_password);
-//        forgetPass.setOnClickListener(new View.OnClickListener() {
-//            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-//            @Override
-//            public void onClick(View v) {
-////                ((AccountActivity) requireActivity()).replaceFragments2(ForgetPasswordFragment.class);
-//            }
-//        });
-//        return root;
-//    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         finish();
@@ -153,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
 //                        spinner.cancel();
-                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Ինչոր բան այն չէ։", Toast.LENGTH_LONG).show();
                     } else {
                         if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                             spinner.show();
@@ -165,13 +111,26 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
                         } else {
-                            Toast.makeText(getApplicationContext(), "Ձեր հաշիվը վերիֆիկացված չէ։(\nԽնդրում ենք մուտք գործեք Ձեր Էլեկտրոնային փոստ Ձեզ մեր կողմից ւղարկվել է հղում սեղմեք հղման վրա եվ դուք կվերիֆիկացվեք", Toast.LENGTH_LONG).show();
+                            AlertDialog.Builder builderB = new AlertDialog.Builder(LoginActivity.this);
+                            builderB.setTitle("Ձեր հաշիվը վերիֆիկացված չէ։(").setMessage("Խնդրում ենք մուտք գործեք Ձեր Էլեկտրոնային փոստ Ձեզ մեր կողմից ուղարկվել է հղում սեղմեք հղման վրա և դուք կվերիֆիկացվեք").setNegativeButton("Շատ բարի։)", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            }).setPositiveButton("Բարի։)", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            AlertDialog alertDialog = builderB.create();
+                            alertDialog.show();
                         }
                     }
                 }
             });
         } else {
-            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Ինչոր բան այն չէ։", Toast.LENGTH_LONG).show();
         }
     }
 

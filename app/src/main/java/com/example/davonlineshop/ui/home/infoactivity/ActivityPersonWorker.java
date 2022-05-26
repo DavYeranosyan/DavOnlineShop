@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.davonlineshop.R;
 import com.example.davonlineshop.model.List;
+import com.example.davonlineshop.ui.account.accmenu.OpenMessageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -36,8 +37,8 @@ public class ActivityPersonWorker extends AppCompatActivity {
     FirebaseStorage firebaseStorage;
     FirebaseDatabase firebaseDatabase;
 
-    ImageView photo_person;
-    TextView name_surname, number;
+    ImageView photo_person, cell_image, message_image;
+    TextView name_surname, number, message;
     Button cell;
 
 
@@ -66,9 +67,12 @@ public class ActivityPersonWorker extends AppCompatActivity {
                     }
                 });
         name_surname = findViewById(R.id.nameSurnamePerson);
-        name_surname.setText(sharedPreferences.getString("user_name", "")+" "+sharedPreferences.getString("user_surname", ""));
+        name_surname.setText(sharedPreferences.getString("user_name", "") + " " + sharedPreferences.getString("user_surname", ""));
         number = findViewById(R.id.personPhoneNumberForCall);
+        message = findViewById(R.id.messagePersonShow);
+        message_image = findViewById(R.id.messagePersonShowMessageBtn);
         cell = findViewById(R.id.cellPersonShow);
+        cell_image = findViewById(R.id.cellPersonShowCellBtn);
         String a = sharedPreferences.getString("table_name", "");
         String b = sharedPreferences.getString("user_email", "");
         databaseReference = FirebaseDatabase.getInstance().getReference().child(a);
@@ -87,6 +91,39 @@ public class ActivityPersonWorker extends AppCompatActivity {
                                 String phone_number = "tel:" + list.getPhone_number();
                                 intent.setData(Uri.parse(phone_number));
                                 startActivity(intent);
+                            }
+                        });
+                        cell_image.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(Intent.ACTION_DIAL);
+                                String phone_number = "tel:" + list.getPhone_number();
+                                intent.setData(Uri.parse(phone_number));
+                                startActivity(intent);
+                            }
+                        });
+                        message.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
+                                if (sharedPreferences.getString("email", "").equals("")) {
+                                    Toast.makeText(getApplicationContext(), "Դուք մուտք չեք գործել հաշիվ։(", Toast.LENGTH_LONG).show();
+                                } else {
+                                    sharedPreferences.edit().putString("to_id", b).apply();
+                                    startActivity(new Intent(getApplicationContext(), OpenMessageActivity.class));
+                                }
+                            }
+                        });
+                        message_image.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
+                                if (sharedPreferences.getString("email", "").equals("")) {
+                                    Toast.makeText(getApplicationContext(), "Դուք մուտք չեք գործել հաշիվ։(", Toast.LENGTH_LONG).show();
+                                } else {
+                                    sharedPreferences.edit().putString("to_id", b).apply();
+                                    startActivity(new Intent(getApplicationContext(), OpenMessageActivity.class));
+                                }
                             }
                         });
                     }

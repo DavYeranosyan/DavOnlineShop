@@ -3,10 +3,7 @@ package com.example.davonlineshop.ui.home.infoactivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -27,7 +24,6 @@ import com.example.davonlineshop.model.List;
 import com.example.davonlineshop.model.Type;
 import com.example.davonlineshop.model.User;
 import com.example.davonlineshop.model.Worker;
-import com.example.davonlineshop.ui.account.authentication.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -125,6 +121,7 @@ public class ActivityFirstList extends AppCompatActivity {
 
 
         favorite_img = findViewById(R.id.btnFavoriteShow);
+        favorite_img.setImageResource(R.drawable.dont_favorite);
         favorite_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -328,7 +325,7 @@ public class ActivityFirstList extends AppCompatActivity {
 
     }
 
-    public void deleteProduct(String tableName, String product_id){
+    public void deleteProduct(String tableName, String product_id) {
         databaseReference = FirebaseDatabase.getInstance().getReference().child(tableName);
         Query query = databaseReference.orderByChild("id").equalTo(product_id);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -336,12 +333,13 @@ public class ActivityFirstList extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot child : snapshot.getChildren()) {
-                       child.getRef().removeValue();
-                       Toast.makeText(getApplication(), "Պրոդուկտը հեռացված է։",Toast.LENGTH_LONG).show();
-                       finish();
+                        child.getRef().removeValue();
+                        Toast.makeText(getApplication(), "Պրոդուկտը հեռացված է։", Toast.LENGTH_LONG).show();
+                        finish();
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -379,14 +377,17 @@ public class ActivityFirstList extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot child : snapshot.getChildren()) {
-                        favorite_img.setImageResource(R.drawable.is_favorite_icon);
-                        favorite_img.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                child.getRef().removeValue();
-                                favorite_img.setImageResource(R.drawable.dont_favorite);
-                            }
-                        });
+                        Favorite favorite = child.getValue(Favorite.class);
+                        if (favorite.getUser_id().equals(user_id_show)) {
+                            favorite_img.setImageResource(R.drawable.is_favorite_icon);
+                            favorite_img.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    child.getRef().removeValue();
+                                    favorite_img.setImageResource(R.drawable.dont_favorite);
+                                }
+                            });
+                        }
                     }
                 }
             }
@@ -460,16 +461,16 @@ public class ActivityFirstList extends AppCompatActivity {
         }
     }
 
-    public void itsAdmin(){
+    public void itsAdmin() {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
         Query query = databaseReference.orderByChild("email").equalTo(user_email);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
                     for (DataSnapshot child : snapshot.getChildren()) {
                         User user = child.getValue(User.class);
-                        if (user.getType() == Type.ADMIN){
+                        if (user.getType() == Type.ADMIN) {
                             delete_btn_admin.setVisibility(View.VISIBLE);
                             delete_btn_admin.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -477,15 +478,18 @@ public class ActivityFirstList extends AppCompatActivity {
                                     deleteProduct(table_name_show, product_id_show);
                                 }
                             });
-                        }else {
+                        } else {
                             delete_btn_admin.setVisibility(View.GONE);
                         }
                     }
+                }else {
+                    delete_btn_admin.setVisibility(View.GONE);
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                delete_btn_admin.setVisibility(View.GONE);
             }
         });
     }

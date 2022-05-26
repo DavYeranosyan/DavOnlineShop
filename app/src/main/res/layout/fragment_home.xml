@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:background="@drawable/border_log"
+        android:background="@drawable/border_full_project"
         tools:ignore="MissingConstraints">
 
         <EditText

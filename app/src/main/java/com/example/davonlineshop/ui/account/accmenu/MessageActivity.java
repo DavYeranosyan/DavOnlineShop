@@ -11,16 +11,14 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.davonlineshop.R;
-import com.example.davonlineshop.model.Chat;
 import com.example.davonlineshop.model.Message;
-import com.example.davonlineshop.model.Type;
 import com.example.davonlineshop.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,8 +38,7 @@ public class MessageActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
-    LinearLayout messageLayout;
-    boolean messageNull = true;
+    LinearLayout layoutFullScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,23 +51,34 @@ public class MessageActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        messageLayout = findViewById(R.id.message_label_first);
+        layoutFullScreen = findViewById(R.id.layout_Fullscreen_message);
         firebaseStorage = FirebaseStorage.getInstance();
 
         sharedPreferences = getSharedPreferences("email", Context.MODE_PRIVATE);
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
-        Query query = databaseReference.orderByChild("email").equalTo(sharedPreferences.getString("email", ""));
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        searchMessages();
+
+
+    }
+
+    public void searchMessages() {
+        String user_id = sharedPreferences.getString("user_id", "");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("message");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+
                     for (DataSnapshot child : snapshot.getChildren()) {
-                        User user = child.getValue(User.class);
-                        if (user.getType() == Type.ADMIN) {
-                            messageLayout.setVisibility(View.GONE);
-                            messageNull = false;
+                        Message message = child.getValue(Message.class);
+                        if (message.getId_one().equals(user_id)) {
+                            layoutFullScreen.removeAllViews();
+                            searchUser(message.getId_two());
+                        } else if (message.getId_two().equals(user_id)) {
+                            layoutFullScreen.removeAllViews();
+                            searchUser(message.getId_one());
                         }
                     }
+
                 }
             }
 
@@ -79,44 +87,36 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-        LinearLayout layoutFullScreen = findViewById(R.id.layout_fullscreen);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("messages");
-        Query query1 = databaseReference;
+    public void searchUser(String user_id) {
+        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("users");
+        Query query = databaseReference1.orderByChild("id").equalTo(user_id);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot child : snapshot.getChildren()) {
-                        Chat message = child.getValue(Chat.class);
-                        messageNull = true;
-                        LinearLayout linearLayout  =new LinearLayout(getApplication());
+                        User user = child.getValue(User.class);
+                        LinearLayout newLayout = new LinearLayout(getApplication());
+                        newLayout.setOrientation(LinearLayout.HORIZONTAL);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(250, 250);
+                        LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120);
+                        newLayout.setPadding(25, 25, 25, 35);
+                        layoutParams1.setMargins(20,0,0,0);
                         ImageView image = new ImageView(getApplication());
-                        image.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                SharedPreferences.Editor preferences = getSharedPreferences("userId", Context.MODE_PRIVATE).edit();
-                                preferences.putString("userId", message.getFrom_id());
-                                preferences.apply();
-                                startActivity(new Intent(getApplicationContext(), OpenMessageActivity.class));
-                            }
-                        });
                         TextView name_surname = new TextView(getApplication());
-                        name_surname.setText(searchUser(message.getFrom_id()));
-                        name_surname.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                SharedPreferences.Editor preferences = getSharedPreferences("userId", Context.MODE_PRIVATE).edit();
-                                preferences.putString("userId", message.getFrom_id());
-                                preferences.apply();
-                                startActivity(new Intent(getApplicationContext(), OpenMessageActivity.class));
-                            }
-                        });
-                        linearLayout.addView(image);
-                        linearLayout.addView(name_surname);
-                        storageReference = firebaseStorage.getReference().child("profile_images/" + message.getFrom_id());
-                        Task<Uri> url =  storageReference.getDownloadUrl()
+                        name_surname.setText(user.getName() + " " + user.getSurname());
+                        name_surname.setTextColor(Color.BLACK);
+                        name_surname.setGravity(Gravity.START);
+                        name_surname.setTextSize(20);
+                        newLayout.addView(image, layoutParams);
+                        newLayout.addView(name_surname, layoutParams1);
+                        layoutFullScreen.addView(newLayout);
+
+                        String pathPhoto = user.getId();
+                        storageReference = firebaseStorage.getReference().child("profile_images/" + pathPhoto);
+                        Task<Uri> url = storageReference.getDownloadUrl()
                                 .addOnCompleteListener(new OnCompleteListener<Uri>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Uri> task) {
@@ -126,6 +126,28 @@ public class MessageActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
+                        name_surname.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SharedPreferences.Editor preferences = getSharedPreferences("Worker", Context.MODE_PRIVATE).edit();
+                                preferences.putString("user_id", user.getId());
+                                preferences.putString("user_email", user.getEmail());
+                                preferences.apply();
+                                startActivity(new Intent(getApplicationContext(), OpenMessageActivity.class));
+                            }
+                        });
+                        image.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SharedPreferences.Editor preferences = getSharedPreferences("Worker", Context.MODE_PRIVATE).edit();
+                                preferences.putString("user_id", user.getId());
+                                preferences.putString("user_email", user.getEmail());
+                                preferences.apply();
+                                startActivity(new Intent(getApplicationContext(), OpenMessageActivity.class));
+                            }
+                        });
+
+
                     }
                 }
             }
@@ -135,41 +157,5 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
-        if (!messageNull){
-            TextView textView = findViewById(R.id.textMessageIsEmpty);
-            textView.setText("Հաղորդագրություներ չկան։");
-            textView.setTextColor(Color.BLACK);
-        }
-
-
-
-
-
-    }
-
-    public String searchUser(String user_id){
-        String[] name = {""};
-        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference().child("users");
-        Query query = databaseReference1.orderByChild("id").equalTo(user_id);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot child : snapshot.getChildren()) {
-                        User user = child.getValue(User.class);
-                        name[0] = user.getName() + " " +user.getSurname();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        return name[0];
-    }
-    public void clickMess(View view) {
-        startActivity(new Intent(getApplicationContext(), OpenMessageActivity.class));
     }
 }
